@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using BCrypt.Net;
 
 namespace backend.Controllers
 {
@@ -78,7 +79,7 @@ namespace backend.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(new { message = "User edited successfully." });
         }
 
         // POST: api/Users
@@ -86,15 +87,20 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-          if (_context.Users == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Users'  is null.");
-          }
+            if (_context.Users == null)
+            {
+                return Problem("Entity set 'ProductContext.Users' is null.");
+            }
+
+            // Hash the password using bcrypt
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
+
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
@@ -113,7 +119,7 @@ namespace backend.Controllers
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { message = "User deleted successfully." });
         }
 
         private bool UserExists(int id)
