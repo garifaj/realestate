@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
 using BCrypt.Net;
+using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -16,10 +17,12 @@ namespace backend.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly IUserRepository _repository;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context, IUserRepository repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         // GET: api/Users
@@ -54,14 +57,20 @@ namespace backend.Controllers
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutUser(int id, UserUpdateDto userUpdateDto)
         {
-            if (id != user.Id)
+
+            var existingUser = _context.Users.Find(id);
+
+            if (existingUser == null)
             {
-                return BadRequest();
+                return NotFound(); // Handle the case where the user is not found
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            // Update other fields
+            existingUser.Name = userUpdateDto.Name;
+            existingUser.Email = userUpdateDto.Email;
+            existingUser.isAdmin = userUpdateDto.isAdmin;
 
             try
             {
@@ -79,27 +88,25 @@ namespace backend.Controllers
                 }
             }
 
-            return Ok(new { message = "User edited successfully." });
+            return Ok("User edited successfully.");
         }
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(RegisterDto dto)
         {
-            if (_context.Users == null)
+            var user = new User
             {
-                return Problem("Entity set 'ProductContext.Users' is null.");
-            }
+                Name = dto.Name,
+                Email = dto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
+                isAdmin = dto.isAdmin
+            };
 
-            // Hash the password using bcrypt
-            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
-
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return Created("User created successfully.", _repository.Create(user));
         }
+
 
 
         // DELETE: api/Users/5
