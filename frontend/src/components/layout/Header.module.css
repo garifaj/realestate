@@ -1,0 +1,133 @@
+.header {
+  margin-bottom: 0;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  animation: stickyNav linear forwards, shrink linear forwards;
+  animation-timeline: view();
+  animation-range-start: 100vh, 111vh;
+  animation-range-end: 110vh, 120vh; /* Add this to change the header text color */
+}
+
+.header .navLink {
+  color: lightgray;
+  animation: stickyNav linear forwards;
+  animation-timeline: view();
+  animation-range-start: 100vh, 111vh;
+  animation-range-end: 110vh, 120vh;
+}
+
+@media (max-width: 991.98px) {
+  .header .navLink {
+    color: black;
+    padding-top: 1rem;
+    font-size: 20px;
+  }
+
+  .header .signin {
+    margin-top: 1rem;
+    font-size: 20px;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+  }
+
+  .offcanvasCustom {
+    width: 300px !important; /* You can adjust this for smaller screens */
+  }
+
+  .hero h1 {
+    font-size: 2rem !important;
+  }
+}
+
+.header .navBrand {
+  color: #fff;
+  font-size: 1.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  animation: stickyNav linear forwards;
+  animation-timeline: view();
+  animation-range-start: 100vh, 111vh;
+  animation-range-end: 110vh, 120vh;
+}
+
+/* CSS */
+.signin {
+  background-color: #f69314 !important;
+  border-radius: 25px;
+  box-sizing: border-box;
+  color: #3b3b3b;
+  font-family: Roobert, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.signin:hover {
+  color: #fff !important;
+  background-color: #343a40 !important;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px !important;
+}
+
+@keyframes stickyNav {
+  100% {
+    background-color: white;
+    color: black; /* Final color after animation */
+  }
+}
+
+/* Add a more specific rule to ensure hover effect works */
+.header .navLink:hover,
+.header .navBrand:hover {
+  color: #f69314 !important; /* Ensure this overrides the final animation state */
+}
+
+@keyframes shrink {
+  100% {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+}
+
+/* Hero section styling */
+.hero {
+  position: relative;
+  height: 100vh; /* Fill the viewport height */
+  background-image: url("https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630");
+  background-size: cover;
+  background-position: center;
+  opacity: 1;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 900;
+}
+
+.hero p {
+  font-size: 1rem;
+  padding-top: 0.5rem;
+}
+/* Overlay for the hero section */
+.hero::after {
+  background: rgba(52, 58, 64, 0.9);
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1; /* Ensure the overlay is above the background */
+}
+
+.hero_content {
+  z-index: 2;
+  color: #fff;
+}
