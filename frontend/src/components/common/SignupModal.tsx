@@ -18,9 +18,17 @@ const SignupModal = ({show, handleClose, handleLogin}: SignupModalProps) => {
       </div>
         <div className="modal-body">
           <form>
-          <div className="form-group mb-3">
-              <label htmlFor="email" className="mb-2 fw-semibold">Full Name</label>
-              <input type="text" className="form-control" id="fullname" placeholder="Enter full name" />
+            <div className="form-group mb-3">
+              <label htmlFor="email" className="mb-2 fw-semibold">Name</label>
+              <input type="text" className="form-control" id="name" placeholder="Enter name" />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="email" className="mb-2 fw-semibold">Surname</label>
+              <input type="text" className="form-control" id="fullname" placeholder="Enter surname" />
+            </div>
+            <div className="form-group mb-3">
+              <label htmlFor="email" className="mb-2 fw-semibold">Phone Number</label>
+              <input type="text" className="form-control" id="fullname" placeholder="Enter phone number" />
             </div>
             <div className="form-group mb-3">
               <label htmlFor="email" className="mb-2 fw-semibold">Email address</label>

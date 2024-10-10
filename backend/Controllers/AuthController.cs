@@ -26,6 +26,8 @@ namespace backend.Controllers
             {
                 Name = dto.Name,
                 Email = dto.Email,
+                Surname = dto.Surname,
+                PhoneNumber = dto.PhoneNumber,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 isAdmin = false
             };

@@ -69,6 +69,8 @@ namespace backend.Controllers
 
             // Update other fields
             existingUser.Name = userUpdateDto.Name;
+            existingUser.Surname = userUpdateDto.Surname;
+            existingUser.PhoneNumber = userUpdateDto.PhoneNumber;
             existingUser.Email = userUpdateDto.Email;
             existingUser.isAdmin = userUpdateDto.isAdmin;
 
@@ -100,6 +102,8 @@ namespace backend.Controllers
             {
                 Name = dto.Name,
                 Email = dto.Email,
+                Surname = dto.Surname,
+                PhoneNumber = dto.PhoneNumber,
                 Password = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 isAdmin = dto.isAdmin
             };
