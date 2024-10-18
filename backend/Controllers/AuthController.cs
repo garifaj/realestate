@@ -58,7 +58,16 @@ namespace backend.Controllers
             });
             return Ok(new
             {
-                message = "success"
+                message = "success",
+                user = new
+                {
+                    id = user.Id,
+                    name = user.Name,
+                    surname = user.Surname,
+                    phoneNumber = user.PhoneNumber,
+                    email = user.Email,
+                    isAdmin = user.isAdmin
+                }
             });
         }
 
