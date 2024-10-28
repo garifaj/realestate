@@ -1,7 +1,7 @@
 import Header from "./Header"
 
 
-const Layout = () => {
+const HomePage = () => {
   return (
     <>
       <Header/>
@@ -9,4 +9,4 @@ const Layout = () => {
   )
 }
 
-export default Layout
+export default HomePage;

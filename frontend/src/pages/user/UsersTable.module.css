@@ -1,0 +1,14 @@
+body {
+  background-color: #fafafa !important;
+}
+.container_room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.divbtn {
+  display: flex;
+  justify-content: end;
+  margin: 0.5rem;
+}

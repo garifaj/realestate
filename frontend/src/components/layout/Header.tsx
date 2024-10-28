@@ -9,13 +9,13 @@ import axios from 'axios';
 export default function Header() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
-  const {user, setUser}=useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const handleOpenLogin = () =>  {
+  const handleOpenLogin = () => {
     setShowSignup(false);
     setShowLogin(true);
-    
+
   }
   const handleCloseLogin = () => setShowLogin(false);
 
@@ -26,15 +26,15 @@ export default function Header() {
   const handleCloseSignup = () => setShowSignup(false);
 
   const handleLogout = async () => {
-    await axios.post("http://localhost:5075/api/logout", {}, {withCredentials: true});
-    navigate('/'); 
+    await axios.post("http://localhost:5075/api/logout", {}, { withCredentials: true });
+    navigate('/');
     setUser(null); // Clear user data from context
-   // Redirect to homepage after logging out
+    // Redirect to homepage after logging out
   };
 
   return (
     <>
-      <header  className={styles.header}> 
+      <header className={styles.header}>
         <nav className="navbar navbar-expand-lg">
           <div className="container">
             <a className={`nav-link ${styles.navBrand}`} href="#">STATED.</a>
@@ -54,7 +54,7 @@ export default function Header() {
               </div>
               <div className="offcanvas-body">
                 <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li className="nav-item px-3">
+                  <li className="nav-item px-3">
                     <a className={`nav-link px-2 ${styles.navLink}`} href="#">
                       Home
                     </a>
@@ -76,57 +76,57 @@ export default function Header() {
                   <li className="nav-item dropdown px-3">
                     {!user ? (
                       <a
-                      className={`nav-link dropdown-toggle ${styles.navLink}`}
-                      href="#"
-                      id={`${styles.dropdown}`}
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Join us
-                    </a>
-                    ): (
+                        className={`nav-link dropdown-toggle ${styles.navLink}`}
+                        href="#"
+                        id={`${styles.dropdown}`}
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Join us
+                      </a>
+                    ) : (
                       <a
-                      className={`nav-link dropdown-toggle ${styles.navLink}`}
-                      href="#"
-                      id={`${styles.dropdown}`}
-                      role="button"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      Hello, {user?.name}
-                    </a>
+                        className={`nav-link dropdown-toggle ${styles.navLink}`}
+                        href="#"
+                        id={`${styles.dropdown}`}
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        Hello, {user?.name}
+                      </a>
                     )}
-                    
+
                     <ul className="dropdown-menu" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
-                    <li>
-                        <a className={`dropdown-item ${styles.navLink}`} href='#'  onClick={handleOpenLogin}>
+                      <li>
+                        <a className={`dropdown-item ${styles.navLink}`} href='#' onClick={handleOpenLogin}>
                           My bookings
                         </a>
                       </li>
-                    <li><hr className="dropdown-divider"/></li>
-                    {!user ? (
-                      <>
-                      <li>
-                        <button className={`dropdown-item ${styles.navLink}`}  onClick={handleOpenLogin}>
-                          Sign in
-                        </button>
-                      </li>
-                      <li>
-                        <button className={`dropdown-item ${styles.navLink}`} onClick={handleSignupShow}>
-                          Register
-                        </button>
-                      </li>
-                      </>
-                       
-                    ): (
-                      <li>
-                      <button className={`dropdown-item ${styles.navLink}`} onClick={handleLogout}>
-                        Logout
-                      </button>
-                    </li>
-                    )}
-                     
+                      <li><hr className="dropdown-divider" /></li>
+                      {!user ? (
+                        <>
+                          <li>
+                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleOpenLogin}>
+                              Sign in
+                            </button>
+                          </li>
+                          <li>
+                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleSignupShow}>
+                              Register
+                            </button>
+                          </li>
+                        </>
+
+                      ) : (
+                        <li>
+                          <button className={`dropdown-item ${styles.navLink}`} onClick={handleLogout}>
+                            Logout
+                          </button>
+                        </li>
+                      )}
+
                     </ul>
                   </li>
                 </ul>
@@ -136,14 +136,14 @@ export default function Header() {
         </nav>
       </header>
 
-      <LoginModal show ={showLogin} handleClose={handleCloseLogin} handleSignupShow = {handleSignupShow}/>
-      <SignupModal show = {showSignup} handleClose={handleCloseSignup} handleLogin={handleOpenLogin}/>
+      <LoginModal show={showLogin} handleClose={handleCloseLogin} handleSignupShow={handleSignupShow} />
+      <SignupModal show={showSignup} handleClose={handleCloseSignup} handleLogin={handleOpenLogin} />
 
       <section className={`hero d-flex align-items-center justify-content-center ${styles.hero}`}>
-      <div className={`col-md-5 col-sm-8 mt-lg-5 text-center  ${styles.hero_content}`}>
-        <h1>Buy and sell real estate properties</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda ea quo cupiditate facere deleniti fuga officia.</p>
-      </div>
+        <div className={`col-md-5 col-sm-8 mt-lg-5 text-center  ${styles.hero_content}`}>
+          <h1>Buy and sell real estate properties</h1>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam assumenda ea quo cupiditate facere deleniti fuga officia.</p>
+        </div>
       </section>
     </>
   );

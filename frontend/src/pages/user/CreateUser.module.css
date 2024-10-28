@@ -1,0 +1,9 @@
+.container_room {
+  display: flex;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.form_group {
+  margin-top: 0.5rem;
+}
