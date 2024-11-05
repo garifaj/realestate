@@ -1,6 +1,8 @@
 using backend.Data;
 using backend.Helpers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,13 @@ builder.Services.AddScoped<JwtService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "Photos")),
+    RequestPath="/Photos"
+});
 
 app.UseHttpsRedirection();
 
