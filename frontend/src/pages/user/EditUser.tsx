@@ -73,7 +73,7 @@ const EditUser = () => {
                         <label className="mb-2 fw-semibold">Name</label>
                         <input
                           type="text"
-                          placeholder="Enter name"
+                          placeholder="Enter first name"
                           value={name}
                           onChange={(e) => setName(e.target.value)}
                           className="form-control"
@@ -87,7 +87,7 @@ const EditUser = () => {
                         <label className="mb-2 fw-semibold">Surname</label>
                         <input
                           type="text"
-                          placeholder="Enter surname"
+                          placeholder="Enter last name"
                           value={surname}
                           onChange={(e) => setSurname(e.target.value)}
                           className="form-control"
@@ -101,7 +101,7 @@ const EditUser = () => {
                         <label className="mb-2 fw-semibold">Phone number</label>
                         <input
                           type="text"
-                          placeholder="Enter phone number"
+                          placeholder="+1 234-567-8901"
                           value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
                           className="form-control"
@@ -116,6 +116,7 @@ const EditUser = () => {
                         <input
                           className="form-control"
                           type="email"
+                          placeholder="name@example.com"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required

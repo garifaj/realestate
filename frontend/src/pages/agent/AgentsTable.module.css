@@ -1,0 +1,18 @@
+body {
+  background-color: #fafafa !important;
+}
+.container_room {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.divbtn {
+  display: flex;
+  justify-content: end;
+  margin: 0.5rem;
+}
+
+#card {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

@@ -67,7 +67,7 @@ const UsersTable = () => {
   };
   return (
     <div className={styles.container_room}>
-      <div className="card">
+      <div className="card" id={styles.card}>
         <div className="card-title">
           <h2 style={{ textAlign: "center" }}>Users table</h2>
         </div>
@@ -89,7 +89,7 @@ const UsersTable = () => {
             />
           </div>
           <div className="table-responsive">
-            <table className="table table-bordered">
+            <table className="table table-bordered" style={{ minWidth: "850px" }}>
               <thead className="bg-dark text-white">
                 <tr>
                   <td>ID</td>
@@ -121,22 +121,31 @@ const UsersTable = () => {
                       <td>{item.email}</td>
                       <td>{item.isAdmin ? "Admin" : "User"}</td>
                       <td>
-                        <a
+                        <div className="row gx-2">
+                          <div className="col">
+                          <a
                           onClick={() => {
                             loadEdit(item.id);
                           }}
-                          className="btn btn-sm btn-success ms-2"
+                          className="btn btn-sm btn-success w-100"
                         >
                           Edit
                         </a>
-                        <a
+                        </div>
+                          <div className="col">
+                          <a
                           onClick={() => {
                             deleteFunction(item.id);
                           }}
-                          className="btn btn-sm btn-danger ms-2"
+                          className="btn btn-sm btn-danger w-100"
                         >
                           Delete
                         </a>
+                        </div>
+                        
+                    
+                        </div>
+                        
                       </td>
                     </tr>
                   ))
