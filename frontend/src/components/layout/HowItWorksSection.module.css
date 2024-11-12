@@ -1,0 +1,22 @@
+body {
+  background-color: #f8f9fa !important;
+}
+
+.title {
+  color: #f69314;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.cardtitle {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #343a40 !important;
+}
+
+.cardparagraph {
+  line-height: 1.7;
+  color: gray;
+  font-weight: 400;
+  font-size: 1rem;
+}
