@@ -27,22 +27,30 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Agent>>> GetAgents()
         {
-          if (_context.Agents == null)
-          {
-              return NotFound();
-          }
-            return await _context.Agents.ToListAsync();
+            if (_context.Agents == null)
+            {
+                return NotFound();
+            }
+
+            // Use eager loading to load properties for all agents
+            return await _context.Agents
+                                 .Include(a => a.Properties)  // Include properties for each agent
+                                 .ToListAsync();
         }
 
         // GET: api/Agents/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Agent>> GetAgent(int id)
         {
-          if (_context.Agents == null)
-          {
-              return NotFound();
-          }
-            var agent = await _context.Agents.FindAsync(id);
+            if (_context.Agents == null)
+            {
+                return NotFound();
+            }
+
+            // Use eager loading to load the related Properties
+            var agent = await _context.Agents
+                                      .Include(a => a.Properties) // This line will include the properties for the agent
+                                      .FirstOrDefaultAsync(a => a.Id == id);
 
             if (agent == null)
             {
