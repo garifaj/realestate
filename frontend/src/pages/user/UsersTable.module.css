@@ -1,12 +1,6 @@
 body {
   background-color: #fafafa !important;
 }
-.container_room {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
 .divbtn {
   display: flex;
   justify-content: end;
@@ -14,5 +8,16 @@ body {
 }
 
 #card {
+  max-width: 1100px;
+  margin: 0 auto;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+table {
+  table-layout: auto;
+}
+
+#headerRow {
+  font-weight: 600;
+  font-style: oblique;
 }

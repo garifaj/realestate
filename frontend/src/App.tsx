@@ -8,6 +8,9 @@ import EditUser from './pages/user/EditUser';
 import AgentsTable from './pages/agent/AgentsTable';
 import EditAgent from './pages/agent/EditAgent';
 import CreateAgent from './pages/agent/CreateAgent';
+import PropertiesTable from './pages/property/PropertiesTable';
+import EditProperty from './pages/property/EditProperty';
+import CreateProperty from './pages/property/CreateProperty';
 
 function App() {
  
@@ -23,6 +26,11 @@ function App() {
         <Route path='/agents' element={<AgentsTable/>}/>
         <Route path='/agents/edit/:agentid' element={<EditAgent/>}/>
         <Route path='/agents/create' element={<CreateAgent/>}/>
+
+        <Route path='/properties' element={<PropertiesTable/>}/>
+        <Route path='/properties/edit/:propertyid' element={<EditProperty/>}/>
+        <Route path='/properties/create' element={<CreateProperty/>}/>
+
       </Routes>
     </UserContextProvider>
   )

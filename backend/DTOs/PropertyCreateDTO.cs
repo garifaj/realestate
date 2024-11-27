@@ -1,4 +1,4 @@
-﻿namespace backend.Data
+﻿namespace backend.DTOs
 {
     public class PropertyCreateDTO
     {

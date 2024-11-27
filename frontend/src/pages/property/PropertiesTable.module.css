@@ -8,7 +8,7 @@ body {
 }
 
 #card {
-  width: 1100px;
+  max-width: 1100px;
   margin: 0 auto;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
@@ -16,15 +16,36 @@ body {
 table {
   table-layout: auto;
 }
+
 #headerRow {
   font-weight: 600;
-  font-style: oblique;
+  font-size: 14px;
 }
 
-.customCell {
+table td {
+  font-size: 14px;
+}
+
+.customCell1 {
+  max-width: 8rem;
+  max-height: 5rem;
+  overflow: hidden; /* Ensures overflow content is hidden */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.customCell2 {
   max-width: 10rem;
   max-height: 5rem;
   overflow: hidden; /* Ensures overflow content is hidden */
   text-overflow: ellipsis; /* Adds ellipsis when text overflows */
   white-space: nowrap;
+}
+
+.customCell3 {
+  max-width: 5rem;
+}
+
+a:hover {
+  cursor: pointer;
 }

@@ -73,156 +73,163 @@ return (
   <div className={styles.container_room}>
     <div className="row">
       <div className="offset-lg-3 col-lg-6">
-        <form className="container" onSubmit={handleSubmit}>
-          <div className="card" style={{ textAlign: "left" }}>
-            <div className="card-title">
-              <h2 style={{ textAlign: "center" }}>Edit agent</h2>
-            </div>
-            <div className="card-body">
-              <div className="row">
-                <div className="col-lg-12">
-                      <div className={styles.form_group}>
-                        <label className="mb-2 fw-semibold">ID</label>
-                        <input
-                          value={id}
-                          disabled
-                          className="form-control"
-                        ></input>
-                      </div>
+      <form className="container" onSubmit={handleSubmit}>
+        <div className="card" style={{ textAlign: "left" }}>
+          <div className="card-title">
+            <h2 style={{ textAlign: "center" }}>Edit Agent</h2>
+          </div>
+          <div className="card-body">
+            <div className="row">
+              {/* ID (Disabled) */}
+              <div className="col-lg-12">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="id">ID</label>
+                  <input
+                    id="id"
+                    value={id}
+                    disabled
+                    className="form-control"
+                  />
                 </div>
+              </div>
 
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Name</label>
-                    <input
-                      type="text"
-                      placeholder="Agent's first name"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="form-control"
-                      required
-                    ></input>
-                  </div>
+              {/* Name and Surname */}
+              <div className="col-lg-6">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="name">Name</label>
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Agent's first name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="form-control"
+                    required
+                  />
                 </div>
-
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Surname</label>
-                    <input
-                      type="text"
-                      placeholder="Agent's last name"
-                      value={surname}
-                      onChange={(e) => setSurname(e.target.value)}
-                      className="form-control"
-                      required
-                    ></input>
-                  </div>
+              </div>
+              <div className="col-lg-6">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="surname">Surname</label>
+                  <input
+                    id="surname"
+                    type="text"
+                    placeholder="Agent's last name"
+                    value={surname}
+                    onChange={(e) => setSurname(e.target.value)}
+                    className="form-control"
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Phone number</label>
-                    <input
-                      type="tel"
-                      pattern="\+?[0-9\s\-\(\)]+" 
-                      placeholder="+1 234-567-8901"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="form-control"
-                      required
-                    ></input>
-                  </div>
+              {/* Bio */}
+              <div className="col-lg-12">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="bio">Bio</label>
+                  <textarea
+                    id="bio"
+                    className="form-control"
+                    rows={3}
+                    placeholder="Brief bio of the agent"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    required
+                  ></textarea>
                 </div>
+              </div>
 
-                
-
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Email</label>
-                    <input
-                      className="form-control"
-                      placeholder="Agent's email address"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    ></input>
-                  </div>
+              {/* Email and Phone Number */}
+              <div className="col-lg-6">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    className="form-control"
+                    placeholder="Agent's email address"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
-
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Bio</label>
-                    <input
-                      className="form-control"
-                      placeholder="Brief bio of the agent"
-                      type="text"
-                      value={bio}
-                      onChange={(e) => setBio(e.target.value)}
-                      required
-                    ></input>
-                  </div>
+              </div>
+              <div className="col-lg-6">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="phoneNumber">Phone Number</label>
+                  <input
+                    id="phoneNumber"
+                    type="tel"
+                    pattern="\+?[0-9\s\-\(\)]+"
+                    placeholder="+1 234-567-8901"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="form-control"
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className="col-lg-12">
-                  <div className={styles.form_group}>
-                    <label className="mb-2 fw-semibold">Linked In</label>
-                    <input
-                      className="form-control"
-                      placeholder="Agent's LinkedIn profile URL"
-                      type="text"
-                      value={linkedIn}
-                      onChange={(e) => setLinkedIn(e.target.value)}
-                      required
-                    ></input>
-                  </div>
+              {/* LinkedIn */}
+              <div className="col-lg-12">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="linkedIn">LinkedIn</label>
+                  <input
+                    id="linkedIn"
+                    className="form-control"
+                    placeholder="Agent's LinkedIn profile URL"
+                    type="text"
+                    value={linkedIn}
+                    onChange={(e) => setLinkedIn(e.target.value)}
+                    required
+                  />
                 </div>
+              </div>
 
-                
+              {/* Image Upload and Preview */}
+              <div className="col-lg-6">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="profilePicture">Image</label>
+                  <input
+                    id="profilePicture"
+                    type="file"
+                    placeholder="Upload agent's profile picture"
+                    onChange={imageUpload}
+                    className="form-control form-control-md mt-2"
+                  />
+                </div>
+              </div>
+              <div className="col-lg-6 mt-2">
+                {profilePicture && (
+                  <img
+                    src={`http://localhost:5075/Photos/${profilePicture}`}
+                    alt="Agent's Profile"
+                    style={{
+                      maxWidth: "150px",
+                      maxHeight: "150px",
+                      borderRadius: "1rem",
+                    }}
+                  />
+                )}
+              </div>
 
-                <div className="col-lg-12">
-                    <div className={styles.form_group}>
-                      <label>Image</label>
-                      <input
-                        type="file"
-                        placeholder="Upload agent's profile picture"
-                        onChange={imageUpload}
-                        className="form-control form-control-md"
-                        
-                      ></input>
-                    </div>
-                    <div
-                      className="col-lg-12"
-                      style={{ marginTop: "0.5rem" }}
-                    >
-                      {profilePicture && (
-                        <img
-                          src={`http://localhost:5075/Photos/${profilePicture}`}
-                          alt="Room Image" 
-                          style={{ maxWidth: "250px", maxHeight: "250px" }}
-                        />
-                      )}
-                    </div>
-                  </div>
-                
-                <div className="col-lg-12">
-                  <div
-                    className={styles.form_group}
-                    style={{ float: "right" }}
-                  >
-                    <button className="btn btn-success" type="submit">
-                      Edit
-                    </button>
-                    &nbsp;
-                    <Link to="/agents" className="btn btn-danger">
-                      Back
-                    </Link>
-                  </div>
+              {/* Action Buttons */}
+              <div className="col-lg-12">
+                <div className={styles.form_group} style={{ textAlign: "right" }}>
+                  <button className="btn btn-success" type="submit">
+                    Edit
+                  </button>
+                  &nbsp;
+                  <Link to="/agents" className="btn btn-danger">
+                    Back
+                  </Link>
                 </div>
               </div>
             </div>
           </div>
-        </form>
+        </div>
+      </form>
+
       </div>
     </div>
   </div>

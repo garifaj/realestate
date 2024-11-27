@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
+using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -63,13 +64,40 @@ namespace backend.Controllers
         // PUT: api/Agents/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAgent(int id, Agent agent)
+        public async Task<IActionResult> PutAgent(int id, AgentDto agentDto)
         {
-            if (id != agent.Id)
+            if (id != agentDto.Id)
             {
                 return BadRequest();
             }
 
+            // Find the agent by ID
+            var agent = await _context.Agents.Include(a => a.Properties).FirstOrDefaultAsync(a => a.Id == id);
+            if (agent == null)
+            {
+                return NotFound();
+            }
+
+            // Update agent properties from the DTO
+            agent.Name = agentDto.Name;
+            agent.Surname = agentDto.Surname;
+            agent.Email = agentDto.Email;
+            agent.PhoneNumber = agentDto.PhoneNumber;
+            agent.Bio = agentDto.Bio;
+            agent.LinkedIn = agentDto.LinkedIn;
+            agent.ProfilePicture = agentDto.ProfilePicture;
+
+            // If PropertyIds are provided, update the agent's properties
+            if (agentDto.PropertyIds != null)
+            {
+                // Fetch the properties using the PropertyIds list
+                var properties = await _context.Property.Where(p => agentDto.PropertyIds.Contains(p.Id)).ToListAsync();
+
+                // Set the agent's properties (or clear if no properties are passed)
+                agent.Properties = properties;
+            }
+
+            // Mark the agent entity as modified and save changes
             _context.Entry(agent).State = EntityState.Modified;
 
             try
@@ -94,12 +122,27 @@ namespace backend.Controllers
         // POST: api/Agents
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Agent>> PostAgent(Agent agent)
+        public async Task<ActionResult<Agent>> PostAgent(AgentDto agentDto)
         {
-          if (_context.Agents == null)
-          {
-              return Problem("Entity set 'ApplicationDbContext.Agents'  is null.");
-          }
+            if (_context.Agents == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Agents' is null.");
+            }
+
+            var agent = new Agent
+            {
+                Name = agentDto.Name,
+                Surname = agentDto.Surname,
+                Email = agentDto.Email,
+                PhoneNumber = agentDto.PhoneNumber,
+                Bio = agentDto.Bio,
+                LinkedIn = agentDto.LinkedIn,
+                ProfilePicture = agentDto.ProfilePicture,
+                Properties = agentDto.PropertyIds != null
+                    ? await _context.Property.Where(p => agentDto.PropertyIds.Contains(p.Id)).ToListAsync()
+                    : new List<Property>() // Empty list if no properties are provided
+            };
+
             _context.Agents.Add(agent);
             await _context.SaveChangesAsync();
 

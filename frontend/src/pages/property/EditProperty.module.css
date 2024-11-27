@@ -1,0 +1,28 @@
+.container {
+  display: grid;
+  place-self: center;
+  max-width: 650px;
+  padding: 2rem;
+  margin-top: 5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+label {
+  font-weight: 600;
+}
+
+.form_group {
+  margin-top: 1rem;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+}
+
+.images img {
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
