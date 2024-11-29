@@ -2,8 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./UsersTable.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { User } from "../../context/types";
-import TablePagination from "../../components/common/TablePagination";
+import { User } from "../../../context/types";
+import TablePagination from "../../../components/common/admin/TablePagination";
 
 const UsersTable = () => {
   const [users, setUsers] = useState<User[]>([]);

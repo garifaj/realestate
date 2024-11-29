@@ -1,14 +1,15 @@
 .header {
   margin-bottom: 0;
   z-index: 999;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
   padding-bottom: 1.5rem;
   padding-top: 1.5rem;
-  background-color: transparent;
+  background-color: #fff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.2);
   animation: stickyNav linear forwards, shrink linear forwards;
   animation-timeline: view();
   animation-range-start: 100vh, 111vh;
@@ -16,7 +17,7 @@
 }
 
 .header .navLink {
-  color: lightgray;
+  color: black;
   animation: stickyNav linear forwards;
   animation-timeline: view();
   animation-range-start: 103vh, 111vh;
@@ -64,7 +65,7 @@
 }
 
 .header .navBrand {
-  color: #fff;
+  color: var(--primary-color);
   font-size: 1.7rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -106,8 +107,8 @@
 /* Hero section styling */
 .hero {
   position: relative;
-  height: 100vh; /* Fill the viewport height */
-  background-image: url("https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630");
+  height: 83vh; /* Fill the viewport height */
+  background-image: url("https://themewagon.github.io/real-estate/assets/images/desktop-hero.jpg");
   background-size: cover;
   background-position: center;
   opacity: 1;
@@ -124,7 +125,7 @@
 }
 /* Overlay for the hero section */
 .hero::after {
-  background: rgba(52, 58, 64, 0.9);
+  background: rgba(40, 45, 50, 0.9);
   position: absolute;
   content: "";
   top: 0;

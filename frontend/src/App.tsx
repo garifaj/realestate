@@ -1,16 +1,17 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import  HomePage from './components/layout/HomePage';
 import { UserContextProvider } from './context/UserContext';
-import UsersTable from './pages/user/UsersTable';
-import CreateUser from './pages/user/CreateUser';
-import EditUser from './pages/user/EditUser';
-import AgentsTable from './pages/agent/AgentsTable';
-import EditAgent from './pages/agent/EditAgent';
-import CreateAgent from './pages/agent/CreateAgent';
-import PropertiesTable from './pages/property/PropertiesTable';
-import EditProperty from './pages/property/EditProperty';
-import CreateProperty from './pages/property/CreateProperty';
+import UsersTable from './pages/user/admin/UsersTable';
+import CreateUser from './pages/user/admin/CreateUser';
+import EditUser from './pages/user/admin/EditUser';
+import AgentsTable from './pages/agent/admin/AgentsTable';
+import EditAgent from './pages/agent/admin/EditAgent';
+import CreateAgent from './pages/agent/admin/CreateAgent';
+import PropertiesTable from './pages/property/admin/PropertiesTable';
+import EditProperty from './pages/property/admin/EditProperty';
+import CreateProperty from './pages/property/admin/CreateProperty';
+import HomePage from './components/layout/home/HomePage';
+import AllProperties from './pages/property/home/AllProperties';
 
 function App() {
  
@@ -30,6 +31,7 @@ function App() {
         <Route path='/properties' element={<PropertiesTable/>}/>
         <Route path='/properties/edit/:propertyid' element={<EditProperty/>}/>
         <Route path='/properties/create' element={<CreateProperty/>}/>
+        <Route path='/allproperties' element={<AllProperties/>}/>
 
       </Routes>
     </UserContextProvider>

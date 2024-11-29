@@ -38,7 +38,7 @@ export type User = {
 export type PropertyFiltersProps = {
     cities: string[];
     propertyTypes: string[];
-    agents: Agent[];
+    agents?: Agent[];
     selectedCity: string;
     setSelectedCity: (city: string) => void;
     selectedType: string;
@@ -47,6 +47,7 @@ export type PropertyFiltersProps = {
     setSelectedAgent: (agentId: string) => void;
     setSearch: (search: string) => void;
     search: string;
+    showAgentFilter?: boolean;
 }
 
 export type TablePaginationProps = {

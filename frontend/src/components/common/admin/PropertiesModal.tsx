@@ -1,4 +1,4 @@
-import { Agent } from "../../context/types";
+import { Agent } from "../../../context/types";
 
 
 type ModalProps = {

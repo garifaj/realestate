@@ -1,120 +1,98 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom"
-import styles from "./EditProperty.module.css"
-import { Agent } from "../../context/types";
-import { cities, propertyTypes } from "../../constants/constants";
+import styles from "./CreateProperty.module.css";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { cities, propertyTypes } from "../../../constants/constants";
+import { Agent } from "../../../context/types";
 
+const CreateProperty = () => {
+    const [title, setTitle] = useState<string>("");
+    const [type, setType] = useState<string>(propertyTypes[0]);
+    const [description, setDescription] = useState<string>("");
+    const [price, setPrice] = useState<number>();
+    const [bedroom, setBedroom] = useState<number>();
+    const [bathroom, setBathroom] = useState<number>();
+    const [area, setArea] = useState<number>();
+    const [address, setAddress] = useState<string>("");
+    const [city, setCity] = useState<string>(cities[0]);
+    const [images, setImages] = useState<string[]>([]);
+    const [agentId, setAgentId] = useState<number>();
+    const [agents, setAgents] =useState<Agent[]>([]);
+    const [error, setError] = useState<string>("");
 
-const EditProperty = () => {
-  const {propertyid} = useParams();
-  const [id, setId] = useState<number>();
-  const [title, setTitle] = useState<string>("");
-  const [type, setType] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [price, setPrice] = useState<number>();
-  const [bedroom, setBedroom] = useState<number>();
-  const [bathroom, setBathroom] = useState<number>();
-  const [area, setArea] = useState<number>();
-  const [address, setAddress] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [images, setImages] = useState<string[]>([]);
-  const [agentId, setAgentId] = useState<number>();
-  const [agents, setAgents] =useState<Agent[]>([]);
-  const [error, setError] = useState<string>("");
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const fetchAgents = async () => {
+        try {
+            const response = await axios.get("http://localhost:5075/api/agents");
+            const agentsData = response.data;
+            setAgents(agentsData); 
+            if(agentsData.length >0) {
+                setAgentId(agentsData[0].id);
+            }
+        } catch (error) {
+            console.error("Error fetching agents:", error);
+        }
+    };
 
+    // Fetch agents on component mount
+    useEffect(() => {
+        fetchAgents();
+    }, []);
 
-  const fetchAgents = async () => {
-    try {
-        const response = await axios.get("http://localhost:5075/api/agents");
-        setAgents(response.data);
-    } catch (error) {
-        console.error("Error fetching agents:", error);
-    }
-};
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const propertyData = {title, type, description, price, bedroom, bathroom, area, address, city, images, agentId};
 
-  const fetchData = async() =>{
-    try {
-      const response = await axios.get(`http://localhost:5075/api/properties/${propertyid}`);
-      const data = await response.data;
-      setId(data.id);
-      setTitle(data.title);
-      setType(data.type);
-      setDescription(data.description);
-      setPrice(data.price);
-      setBedroom(data.bedroom);
-      setBathroom(data.bathroom);
-      setArea(data.area);
-      setAddress(data.address);
-      setCity(data.city);
-      setImages(data.images);
-      setAgentId(data.agentId);
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-    fetchAgents();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const propertyData = {id, title, type, description, price, bedroom, bathroom, area, address, city, images, agentId};
-
-    if(error) {
-        return;
-    }
-
-    axios.put(`http://localhost:5075/api/properties/${propertyid}`, propertyData)
-    .then(() =>{
-        alert("Edited property successfully!");
-        navigate("/properties");
-    })
-    .catch((err) =>{
-        console.log(err.message)
-    });
-  }
-
-  const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-
-    const files = e.target.files;
-    if (files && files.length > 0) {
-        // Validate all files
-        const validTypes = ["image/jpeg", "image/png"];
-        const invalidFiles = Array.from(files).filter(file => !validTypes.includes(file.type));
-
-        if (invalidFiles.length > 0) {
-            setError("Please upload files with .jpg or .png extensions only.");
+        if(error) {
             return;
         }
 
-        setError(""); // Clear any previous error messages
-
-        const formData = new FormData();
-        Array.from(files).forEach((file) => {
-            formData.append("files", file, file.name);
+        axios.post("http://localhost:5075/api/properties", propertyData)
+        .then(() =>{
+            alert("Created property successfully!");
+            navigate("/properties");
+        })
+        .catch((err) =>{
+            console.log(err.message)
         });
-
-        axios.post("http://localhost:5075/api/properties/savefile", formData)
-            .then((response) => {
-                setImages(response.data);
-            })
-            .catch((error) => {
-                console.error("Error uploading files:", error);
-                setError("An error occurred while uploading the files.");
-            });
     }
-  };
+
+    const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
+
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            // Validate all files
+            const validTypes = ["image/jpeg", "image/png"];
+            const invalidFiles = Array.from(files).filter(file => !validTypes.includes(file.type));
+
+            if (invalidFiles.length > 0) {
+                setError("Please upload files with .jpg or .png extensions only.");
+                return;
+            }
+
+            setError(""); // Clear any previous error messages
+
+            const formData = new FormData();
+            Array.from(files).forEach((file) => {
+                formData.append("files", file, file.name);
+            });
+
+            axios.post("http://localhost:5075/api/properties/savefile", formData)
+                .then((response) => {
+                    setImages(response.data);
+                })
+                .catch((error) => {
+                    console.error("Error uploading files:", error);
+                    setError("An error occurred while uploading the files.");
+                });
+        }
+    };
+
   return (
-    <>
-      <div className={styles.container}>
-        <h2 className="mb-4 text-center">Edit Property</h2>
+    <div className={styles.container}>
+        <h2 className="mb-4 text-center">Add New Property</h2>
         <form onSubmit={handleSubmit} >
             <div className="row g-3">
             
@@ -262,23 +240,8 @@ const EditProperty = () => {
                     className="form-control"  
                     onChange={imageUpload}           
                     multiple
-                    />
-                    <small className="text-muted">
-                      {images.length > 0 && !error ? `${images.length} file(s) selected:` : "No files selected"}
-                    </small>
-                    <br/>
+                    required/>
                     {error && <small className="text-danger">{error}</small>}
-                    <div className={styles.images}>
-                    {images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={`http://localhost:5075/Photos/${image}`}
-                          alt={`Room Image ${index + 1}`}
-                          style={{ maxWidth: "150px", maxHeight: "150px", margin: "5px"}}
-                        />
-                      ))}
-                    </div>
-                    
                 </div>
             </div>
 
@@ -288,7 +251,7 @@ const EditProperty = () => {
                       style={{ float: "right" }}
                     >
                       <button className="btn btn-success" type="submit">
-                        Edit
+                        Create
                       </button>
                       &nbsp;
                       <Link to="/properties" className="btn btn-danger">
@@ -298,8 +261,7 @@ const EditProperty = () => {
                   </div>
         </form>
     </div>
-    </>
   )
 }
 
-export default EditProperty
+export default CreateProperty

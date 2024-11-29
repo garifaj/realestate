@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
 import styles from './Header.module.css'; // Import the CSS module
-import LoginModal from '../common/LoginModal';
-import SignupModal from '../common/SignupModal';
-import { UserContext } from '../../context/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../../../context/UserContext';
+import LoginModal from '../../common/home/LoginModal';
+import SignupModal from '../../common/home/SignupModal';
 
 const Navbar = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -37,7 +37,7 @@ const Navbar = () => {
     <header className={styles.header}>
         <nav className="navbar navbar-expand-lg">
           <div className="container">
-            <a className={`nav-link ${styles.navBrand}`} href="#">STATED.</a>
+            <Link to={"/"} className={`nav-link ${styles.navBrand}`}>STATED.</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -55,22 +55,22 @@ const Navbar = () => {
               <div className="offcanvas-body">
                 <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                   <li className="nav-item px-3">
-                    <a className={`nav-link px-2 ${styles.navLink}`} href="#">
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/">
                       Home
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item px-3">
-                    <a className={`nav-link px-2 ${styles.navLink}`} href="#">
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/allproperties">
                       Properties
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item px-3 ">
-                    <a className={`nav-link px-2 ${styles.navLink}`} href="#" >
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#" >
                       Agents
-                    </a>
+                    </Link>
                   </li>
                   <li className="nav-item px-3 ">
-                    <a className={`nav-link px-2 ${styles.navLink}`} href="#">Blogs</a>
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#">Blogs</Link>
                   </li>
                   {/* Profile Dropdown */}
                   <li className="nav-item dropdown px-3">
@@ -100,9 +100,9 @@ const Navbar = () => {
 
                     <ul className="dropdown-menu" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
                       <li>
-                        <a className={`dropdown-item ${styles.navLink}`} href='#' onClick={handleOpenLogin}>
+                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={handleOpenLogin}>
                           My bookings
-                        </a>
+                        </Link>
                       </li>
                       <li><hr className="dropdown-divider" /></li>
                       {!user ? (

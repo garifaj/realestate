@@ -1,5 +1,6 @@
 import Header from "./Header"
 import HowItWorksSection from "./HowItWorksSection";
+import PropertiesSection from "./PropertiesSection";
 
 
 const HomePage = () => {
@@ -7,6 +8,7 @@ const HomePage = () => {
     <>
       <Header/>
       <HowItWorksSection/>
+      <PropertiesSection/>
     </>
   )
 }

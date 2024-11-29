@@ -1,32 +1,29 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./PropertiesTable.module.css";
-import { Agent, Property } from "../../context/types";
-import { cities, propertyTypes } from "../../constants/constants.tsx" // Assuming you have these arrays in a constants file.
-import PropertyFilters from "./PropertyFilters.tsx";
-import TablePagination from "../../components/common/TablePagination.tsx";
+import axios from "axios";
+import styles from "./AgentsTable.module.css";
+import PropertiesModal from "../../../components/common/admin/PropertiesModal";
+import { Agent } from "../../../context/types";
+import TablePagination from "../../../components/common/admin/TablePagination";
 
-const PropertiesTable = () => {
-  const [properties, setProperties] = useState<Property[]>([]);
+
+const AgentsTable = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
-  const [selectedCity, setSelectedCity] = useState<string>("");
-  const [selectedType, setSelectedType] = useState<string>("");
-  const [selectedAgent, setSelectedAgent] = useState<string>("");
-
-  const propertiesPerPage = 4;
+  const [showPropertyModal, setShowPropertyModal] = useState(false);
+  const [selectedAgent, setSelectedAgent] = useState<Agent|null>(null);
+  const agentsPerPage = 3;
   const navigate = useNavigate();
 
   const loadEdit = (id: number) => {
-    navigate("/properties/edit/" + id);
+    navigate("/agents/edit/" + id);
   };
 
   const deleteFunction = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this property?")) {
+    if (window.confirm("Are you sure you want to delete this agent?")) {
       axios
-        .delete(`http://localhost:5075/api/properties/${id}`)
+        .delete(`http://localhost:5075/api/agents/${id}`)
         .then(() => {
           alert("Deleted successfully!");
           window.location.reload();
@@ -38,59 +35,49 @@ const PropertiesTable = () => {
   };
 
   useEffect(() => {
-    async function fetchProperties() {
-      try {
-        const response = await axios.get("http://localhost:5075/api/properties");
-        setProperties(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function fetchAgents() {
+    const fetchAgents = async () => {
       try {
         const response = await axios.get("http://localhost:5075/api/agents");
         setAgents(response.data);
       } catch (error) {
         console.error(error);
       }
-    }
-
-    fetchProperties();
+    };
     fetchAgents();
   }, []);
 
-  const filteredProperties = properties.filter((property) => {
-    const fullName = `${property.agent?.name || ""} ${property.agent?.surname || ""}`.toLowerCase();
+  const filteredAgents = agents.filter((agent) => {
     return (
-      (search === "" ||
-        property.title.toLowerCase().includes(search.toLowerCase()) ||
-        property.description.toLowerCase().includes(search.toLowerCase()) ||
-        property.city.toLowerCase().includes(search.toLowerCase()) ||
-        fullName.includes(search.toLowerCase()) ||
-        property.type.toLowerCase().includes(search.toLowerCase())) &&
-      (selectedCity === "" || property.city === selectedCity) &&
-      (selectedType === "" || property.type === selectedType) &&
-      (selectedAgent === "" ||
-        (property.agent && property.agent.id === parseInt(selectedAgent)))
+      agent.name.toLowerCase().includes(search.toLowerCase()) ||
+      agent.email.toLowerCase().includes(search.toLowerCase())
     );
   });
 
-  const indexOfLastBooking = currentPage * propertiesPerPage;
-  const indexOfFirstBooking = indexOfLastBooking - propertiesPerPage;
-  const currentProperties =
-    filteredProperties &&
-    filteredProperties.slice(indexOfFirstBooking, indexOfLastBooking);
+  const indexOfLastAgent = currentPage * agentsPerPage;
+  const indexOfFirstAgent = indexOfLastAgent - agentsPerPage;
+  const currentAgents =
+    filteredAgents &&
+    filteredAgents.slice(indexOfFirstAgent, indexOfLastAgent);
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
+  const handleOpenPropertyModal = (agent: Agent) => {
+    setShowPropertyModal(true);
+    setSelectedAgent(agent);
+
+  }
+  const handleClosePropertyModal = () => {
+    setShowPropertyModal(false);
+    setSelectedAgent(null);
+  }
+
   return (
     <div className="container py-5">
       <div className="card" id={styles.card}>
         <div className="card-title">
-          <h2 className="mb-0" style={{ textAlign: "center" }}>Properties Table</h2>
+          <h2 style={{ textAlign: "center" }}>Agents Table</h2>
         </div>
         <div className="card-body">
           <div className={styles.divbtn}>
@@ -98,86 +85,85 @@ const PropertiesTable = () => {
               Add New +
             </Link>
           </div>
-          <PropertyFilters 
-          cities={cities}
-          propertyTypes={propertyTypes}
-          agents={agents}
-          selectedCity={selectedCity}
-          setSelectedCity={setSelectedCity}
-          selectedType={selectedType}
-          setSelectedType={setSelectedType}
-          selectedAgent={selectedAgent}
-          setSelectedAgent={setSelectedAgent}
-          setSearch={setSearch}
-          search = {search}
-          />
+          <div className="mb-3">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              className="form-control"
+            />
+          </div>
           <div className="table-responsive">
-            <table className="table table-bordered table-hover" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
-              <thead className="bg-dark text-white  ">
+            <table className="table table-bordered" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
+              <thead className="bg-dark text-white">
                 <tr id={styles.headerRow}>
                   <td>ID</td>
-                  <td>Title</td>
-                  <td>Description</td>
-                  <td>Price (€)</td>
-                  <td>Bedroom</td>
-                  <td>Bathroom</td>
-                  <td>Area m²</td>
-                  <td>Type</td>
-                  <td>Address</td>
-                  <td>City</td>
-                  <td>Agent</td>
+                  <td>Full Name</td>
+                  <td>Phone Number</td>
+                  <td>Email</td>
+                  <td>Bio</td>
+                  <td>LinkedIn</td>
+                  <td>Properties</td>
                   <td>Actions</td>
                 </tr>
               </thead>
               <tbody>
-                {currentProperties.length === 0 ? (
+                {currentAgents.length === 0 ? (
                   <tr>
                     <td
-                      colSpan={12}
+                      colSpan={9}
                       style={{ textAlign: "center", fontSize: "25px" }}
                     >
-                      No properties found!
+                      No agents found!
                     </td>
                   </tr>
                 ) : (
-                  currentProperties.map((property) => (
-                    <tr key={property.id}>
-                      <td>{property.id}</td>
+                  currentAgents.map((agent) => (
+                    <tr key={agent.id}>
+                      <td>{agent.id}</td>
                       <td>
-                        <div className={styles.customCell1}>
-                         {property.title}
-                         </div>
+                        {agent.name} {agent.surname}
                       </td>
+                      <td>{agent.phoneNumber}</td>
+                      <td>{agent.email}</td>
                       <td>
-                        <div className={styles.customCell2}>
-                          {property.description}
-                        </div>
-                        
+                        <div className={styles.customCell}>
+                          {agent.bio}
+                          </div>
                       </td>
+                      <td 
+                      style={{
+                            maxWidth: "20rem",
+                            maxHeight: "5rem",
+                            overflow: "auto",
+                      }}>{agent.linkedIn}</td>
                       <td>
-                        <div className={styles.customCell3}>
-                          {property.price.toFixed(2)}
-                        </div>
-                      </td>
-                      <td>{property.bedroom}</td>
-                      <td>{property.bathroom}</td>
-                      <td>{property.area}</td>
-                      <td>{property.type}</td>
-                      <td>{property.address}</td>
-                      <td>{property.city}</td>
-                      <td>
-                        {property.agent
-                          ? `${property.agent.name} ${property.agent.surname}`
-                          : "Unassigned"}
+                        {agent.properties && agent.properties.length > 0 ? (
+                          <a
+                            href="#"
+                            className="link-primary"
+                            onClick={(e) => {
+                              e.preventDefault(); // Prevent page reload
+                              handleOpenPropertyModal(agent);
+                            }}
+                          >
+                            View Properties
+                          </a>
+                        ) : (
+                          <span>No properties</span>
+                        )}
                       </td>
                       <td>
                         <div
                           className="d-flex justify-content-center align-items-center"
-                          style={{ gap: "10px" }} // Add spacing between icons
+                          style={{ gap: "10px" }} // Adjust spacing between icons as needed
                         >
                           <a
                             onClick={() => {
-                              loadEdit(property.id);
+                              loadEdit(agent.id);
                             }}
                           >
                             <svg
@@ -208,7 +194,7 @@ const PropertiesTable = () => {
                           </a>
                           <a
                             onClick={() => {
-                              deleteFunction(property.id);
+                              deleteFunction(agent.id);
                             }}
                           >
                             <svg
@@ -232,25 +218,27 @@ const PropertiesTable = () => {
                           </a>
                         </div>
                       </td>
+
                     </tr>
                   ))
                 )}
               </tbody>
               <tfoot>
                 <TablePagination
-                  totalItems={filteredProperties.length}
-                  itemsPerPage={propertiesPerPage}
+                  totalItems={filteredAgents.length}
+                  itemsPerPage={agentsPerPage}
                   currentPage={currentPage}
                   paginate={paginate}
-                  colSpan={12} // Set this dynamically based on your table's column count
+                  colSpan={8} // table column count
                 />
               </tfoot>
             </table>
           </div>
         </div>
       </div>
+      <PropertiesModal show = {showPropertyModal} handleClose ={handleClosePropertyModal} agent={selectedAgent}/>
     </div>
   );
 };
 
-export default PropertiesTable;
+export default AgentsTable;

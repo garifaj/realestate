@@ -1,5 +1,5 @@
 import React from "react";
-import { TablePaginationProps } from "../../context/types";
+import { TablePaginationProps } from "../../../context/types";
 
 const TablePagination: React.FC<TablePaginationProps> = ({
   totalItems,

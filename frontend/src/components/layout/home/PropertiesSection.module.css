@@ -1,0 +1,19 @@
+.properties {
+  background-color: #fff;
+}
+
+.title {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.viewPropertiesButton {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  padding: 10px 100px !important;
+  font-size: 16px;
+  border-radius: 1.5rem !important;
+  margin-top: 2rem;
+}

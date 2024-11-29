@@ -1,74 +1,98 @@
-import {  useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import styles from "../agent/CreateAgent.module.css";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import styles from "./EditAgent.module.css";
 import axios from "axios";
 
-const CreateAgent = () => {
-  const [name, setName] = useState<string>("");
-  const [surname, setSurname] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
-  const [bio, setBio] = useState<string>("");
-  const [linkedIn, setLinkedIn] = useState<string>("");
-  const [profilePicture, setProfilePicture] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const navigate = useNavigate();
+const EditAgent = () => {
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const agentData = {name, surname, email, phoneNumber, bio, linkedIn, profilePicture};
+const {agentid} = useParams();
+const [id, setId] = useState<number>();
+const [name, setName] = useState<string>("");
+const [surname, setSurname] = useState<string>("");
+const [email, setEmail] = useState<string>("");
+const [phoneNumber, setPhoneNumber] = useState<string>("");
+const [bio, setBio] = useState<string>("");
+const [linkedIn, setLinkedIn] = useState<string>("");
+const [profilePicture, setProfilePicture] = useState<string>("");
 
-    //Check if there are any errors
-    if (error) {
-      return; // Stops form submission
-    }
+const navigate = useNavigate();
 
-    axios.post("http://localhost:5075/api/agents", agentData)
-    .then(() =>{
-      alert("Created agent successfully!");
-      navigate("/agents");
-    })
-    .catch((err) =>{
-      console.log(err.message)
-    });
-  };
+const fetchData = async() => {
+  try {
+    const response = await axios.get(`http://localhost:5075/api/agents/${agentid}`);
+    const data = await response.data;
+    setId(data.id);
+    setName(data.name);
+    setSurname(data.surname);
+    setEmail(data.email);
+    setPhoneNumber(data.phoneNumber);
+    setBio(data.bio);
+    setLinkedIn(data.linkedIn);
+    setProfilePicture(data.profilePicture);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-  const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const file = e.target.files?.[0];
-    if (file) {
-      // Validate file type
-      const validTypes = ["image/jpeg", "image/png"];
-      if (!validTypes.includes(file.type)) {
-        setError("Please upload a file with .jpg or .png extension."); // Set error message
-        return;
-      }
+useEffect(() => {
+  fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+},[]);
 
-      setError(""); // Clear any previous error messages
-      const formData = new FormData();
-      formData.append("file", file, file.name);
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const agentData = {id ,name, surname, email, phoneNumber, bio, linkedIn, profilePicture};
+  axios.put(`http://localhost:5075/api/agents/${agentid}`, agentData)
+  .then(() =>{
+    alert("Edited agent successfully!");
+    navigate("/agents");
+  })
+  .catch((err) =>{
+    console.log(err.message)
+  });
+};
+
+const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  if (e.target.files && e.target.files[0]) {
+      formData.append("file", e.target.files[0], e.target.files[0].name);
 
       axios.post("http://localhost:5075/api/agents/savefile", formData)
-        .then((response) => {
+      .then((response) => {
           setProfilePicture(response.data);
-        })
-        .catch((error) => {
+      })
+      .catch((error) => {
           console.error("Error uploading file:", error);
-        });
-    }
-  };
-  return (
-    <>
-    <div className={styles.container_room}>
-      <div className="row">
-        <div className="offset-lg-3 col-lg-6">
-        <form className="container" onSubmit={handleSubmit}>
+      });
+  }
+};
+return (
+  <>
+  <div className={styles.container_room}>
+    <div className="row">
+      <div className="offset-lg-3 col-lg-6">
+      <form className="container" onSubmit={handleSubmit}>
         <div className="card" style={{ textAlign: "left" }}>
           <div className="card-title">
-            <h2 style={{ textAlign: "center" }}>Add New Agent</h2>
+            <h2 style={{ textAlign: "center" }}>Edit Agent</h2>
           </div>
           <div className="card-body">
             <div className="row">
+              {/* ID (Disabled) */}
+              <div className="col-lg-12">
+                <div className={styles.form_group}>
+                  <label className="mb-2 fw-semibold" htmlFor="id">ID</label>
+                  <input
+                    id="id"
+                    value={id}
+                    disabled
+                    className="form-control"
+                  />
+                </div>
+              </div>
+
               {/* Name and Surname */}
               <div className="col-lg-6">
                 <div className={styles.form_group}>
@@ -193,7 +217,7 @@ const CreateAgent = () => {
               <div className="col-lg-12">
                 <div className={styles.form_group} style={{ textAlign: "right" }}>
                   <button className="btn btn-success" type="submit">
-                    Create
+                    Edit
                   </button>
                   &nbsp;
                   <Link to="/agents" className="btn btn-danger">
@@ -205,11 +229,12 @@ const CreateAgent = () => {
           </div>
         </div>
       </form>
-        </div>
+
       </div>
     </div>
-  </>
+  </div>
+</>
   )
 }
 
-export default CreateAgent
+export default EditAgent;
