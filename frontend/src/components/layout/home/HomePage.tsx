@@ -1,3 +1,4 @@
+import AgentSection from "./AgentSection";
 import Header from "./Header"
 import HowItWorksSection from "./HowItWorksSection";
 import PropertiesSection from "./PropertiesSection";
@@ -9,6 +10,7 @@ const HomePage = () => {
       <Header/>
       <HowItWorksSection/>
       <PropertiesSection/>
+      <AgentSection/>
     </>
   )
 }
