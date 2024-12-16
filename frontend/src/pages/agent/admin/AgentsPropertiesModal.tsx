@@ -7,7 +7,7 @@ type ModalProps = {
   handleClose: () => void;
 };
 
-const PropertiesModal: React.FC<ModalProps> = ({ agent, show, handleClose }) => {
+const AgentsPropertiesModal: React.FC<ModalProps> = ({ agent, show, handleClose }) => {
   return (
     <div
       className={`modal fade ${show ? "show d-block" : "d-none"}`}
@@ -61,4 +61,4 @@ const PropertiesModal: React.FC<ModalProps> = ({ agent, show, handleClose }) => 
   );
 };
 
-export default PropertiesModal;
+export default AgentsPropertiesModal;

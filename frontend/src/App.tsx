@@ -12,6 +12,10 @@ import EditProperty from './pages/property/admin/EditProperty';
 import CreateProperty from './pages/property/admin/CreateProperty';
 import HomePage from './components/layout/home/HomePage';
 import AllProperties from './pages/property/home/AllProperties';
+import BookingForm from './pages/booking/home/BookingForm';
+import BookingsTable from './pages/booking/admin/BookingsTable';
+import PropertyDetails from './pages/property/home/PropertyDetails';
+
 
 function App() {
  
@@ -32,6 +36,11 @@ function App() {
         <Route path='/properties/edit/:propertyid' element={<EditProperty/>}/>
         <Route path='/properties/create' element={<CreateProperty/>}/>
         <Route path='/allproperties' element={<AllProperties/>}/>
+        <Route path='/property/details/:propertyid' element={<PropertyDetails/>}/>
+       
+
+        <Route path='/bookingtest' element={<BookingForm/>}/>
+        <Route path='/bookings' element={<BookingsTable/>}/>
 
       </Routes>
     </UserContextProvider>

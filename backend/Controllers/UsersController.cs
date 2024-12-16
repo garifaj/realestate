@@ -29,29 +29,41 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            return await _context.Users.ToListAsync();
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+
+            // Include bookings for each user
+            var users = await _context.Users
+                                      .Include(u => u.Bookings) // Load related Bookings
+                                      .ThenInclude(p => p.Property) // Include bookings property
+                                      .ToListAsync();
+
+            return Ok(users);
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
-          if (_context.Users == null)
-          {
-              return NotFound();
-          }
-            var user = await _context.Users.FindAsync(id);
+            if (_context.Users == null)
+            {
+                return NotFound();
+            }
+
+            // Load user with their bookings
+            var user = await _context.Users
+                                     .Include(u => u.Bookings) // Include related Bookings
+                                     .ThenInclude(p => p.Property) // Include bookings property
+                                     .FirstOrDefaultAsync(u => u.Id == id); // Filter by ID
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
         }
 
         // PUT: api/Users/5

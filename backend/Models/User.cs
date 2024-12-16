@@ -13,5 +13,6 @@ namespace backend.Models
         [JsonIgnore]
         public string Password { get; set; }
         public bool isAdmin { get; set; }
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }

@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { cities, propertyTypes } from "../../../constants/constants";
 import { Agent } from "../../../context/types";
+import PropertyImageGallery from "./PropertyImageGallery";
+import TextEditor from "../../../components/common/admin/TextEditor";
 
 const CreateProperty = () => {
     const [title, setTitle] = useState<string>("");
@@ -93,9 +95,8 @@ const CreateProperty = () => {
   return (
     <div className={styles.container}>
         <h2 className="mb-4 text-center">Add New Property</h2>
-        <form onSubmit={handleSubmit} >
-            <div className="row g-3">
-            
+        <form onSubmit={handleSubmit} style={{ overflow:"auto"}}>
+            <div className="row g-3 mx-0">
                 <div className="col-md-6">
                     <label  className="form-label">Title:</label>
                     <input 
@@ -127,15 +128,10 @@ const CreateProperty = () => {
                 </div>
 
                 <div className="col-md-12">
+
                     <label className="form-label">Description:</label>
-                    <textarea  
-                    className="form-control" 
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={3} 
-                    placeholder="Enter property description" 
-                    required>
-                    </textarea>
+                    <TextEditor onChange={setDescription} value={description}/>
+                    
                 </div>
 
                 <div className="col-md-4">
@@ -244,6 +240,10 @@ const CreateProperty = () => {
                     {error && <small className="text-danger">{error}</small>}
                 </div>
             </div>
+
+            <div className="col-12 py-3 pe-3">
+                        <PropertyImageGallery images={images}/>
+                    </div>
 
             <div className="col-lg-12">
                     <div

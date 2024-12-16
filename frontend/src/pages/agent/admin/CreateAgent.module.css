@@ -1,9 +1,19 @@
-.container_room {
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
+.container {
+  display: grid;
+  place-self: center;
+  max-width: 650px;
+  padding: 2rem;
+  margin: 3rem 0rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+label {
+  font-weight: 600;
 }
 
 .form_group {
   margin-top: 0.5rem;
+  overflow-x: hidden;
 }

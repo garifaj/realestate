@@ -31,6 +31,7 @@ namespace backend.Controllers
             var properties = await _context.Property
             .Include(p => p.Agent) // Load Agent
             .ThenInclude(a => a.Properties) // Load Agent's Properties
+            .Include(p => p.Bookings)
             .ToListAsync();
 
             foreach (var property in properties)
@@ -49,6 +50,7 @@ namespace backend.Controllers
             var property = await _context.Property
                 .Include(p => p.Agent)  // Include the Agent for the Property
                 .Include(p => p.Agent.Properties)  // Include the Agent's Properties
+                .Include(p => p.Bookings)
                 .FirstOrDefaultAsync(p => p.Id == id);  // Fetch the property by its ID
 
             if (property == null)

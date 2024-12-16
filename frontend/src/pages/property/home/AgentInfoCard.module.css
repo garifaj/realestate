@@ -1,0 +1,20 @@
+.agentPic {
+  display: flex;
+  height: 85px;
+  width: 85px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.agentInfo h6 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #212b36;
+}
+
+.agentInfo a {
+  font-size: 15px;
+  text-decoration: none;
+  color: #525252;
+  font-weight: 500;
+}

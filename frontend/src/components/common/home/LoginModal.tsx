@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import styles from "./LoginModal.module.css";
 import { UserContext } from "../../../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 type LoginModalProps = {
@@ -17,6 +17,7 @@ const LoginModal = ({ show, handleClose, handleSignupShow }: LoginModalProps) =>
   const [showValidation, setShowValidation] = useState<boolean>(false); // New state for validation
   const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -37,7 +38,9 @@ const LoginModal = ({ show, handleClose, handleSignupShow }: LoginModalProps) =>
         );
         setUser(data.user);
         handleClose();
-        navigate("/");
+        // Redirect back to the current location or home as a fallback
+        const redirectPath = location.pathname + location.search;
+        navigate(redirectPath);
         setShowValidation(false); 
         
         //Clear fields after submit
@@ -101,7 +104,7 @@ const LoginModal = ({ show, handleClose, handleSignupShow }: LoginModalProps) =>
               <div className="d-grid mb-2">
                 <button type="submit" className={`btn btn-primary ${styles.btn}`}>Login</button>
               </div>
-              <p className="text-center">Don't have an account? <a href="#" className={styles.signup} onClick={handleSignupShow}> Sign up</a></p>
+              <p className="text-center">Don't have an account? <a className={styles.signup} onClick={handleSignupShow}> Sign up</a></p>
             </form>
           </div>
         </div>

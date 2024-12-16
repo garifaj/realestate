@@ -35,6 +35,16 @@ export type User = {
     isAdmin: boolean;
 }
 
+export type Booking = {
+    id: number;
+    propertyId: number;
+    property: Property;
+    userId: number;
+    user: User;
+    bookingDate: string;
+    status?: string | null;
+}
+
 export type PropertyFiltersProps = {
     cities: string[];
     propertyTypes: string[];

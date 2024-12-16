@@ -15,4 +15,5 @@ label {
 
 .form_group {
   margin-top: 0.5rem;
+  overflow-x: hidden;
 }

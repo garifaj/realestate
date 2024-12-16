@@ -4,6 +4,9 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import styles from "./EditProperty.module.css"
 import { Agent } from "../../../context/types";
 import { cities, propertyTypes } from "../../../constants/constants";
+import PropertyImageGallery from "./PropertyImageGallery";
+import TextEditor from "../../../components/common/admin/TextEditor";
+
 
 
 const EditProperty = () => {
@@ -115,9 +118,8 @@ const EditProperty = () => {
     <>
       <div className={styles.container}>
         <h2 className="mb-4 text-center">Edit Property</h2>
-        <form onSubmit={handleSubmit} >
-            <div className="row g-3">
-            
+        <form onSubmit={handleSubmit} style={{overflow:"auto"}}>
+            <div className="row g-3 mx-0">
                 <div className="col-md-6">
                     <label  className="form-label">Title:</label>
                     <input 
@@ -150,14 +152,7 @@ const EditProperty = () => {
 
                 <div className="col-md-12">
                     <label className="form-label">Description:</label>
-                    <textarea  
-                    className="form-control" 
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    rows={3} 
-                    placeholder="Enter property description" 
-                    required>
-                    </textarea>
+                    <TextEditor onChange={setDescription} value={description}/>
                 </div>
 
                 <div className="col-md-4">
@@ -255,7 +250,7 @@ const EditProperty = () => {
                     />
                 </div>
 
-                <div className="col-md-6">
+                <div className="col-md-6 ">
                     <label className="form-label">Upload Image:</label>
                     <input 
                     type="file" 
@@ -268,19 +263,13 @@ const EditProperty = () => {
                     </small>
                     <br/>
                     {error && <small className="text-danger">{error}</small>}
-                    <div className={styles.images}>
-                    {images.map((image, index) => (
-                        <img
-                          key={index}
-                          src={`http://localhost:5075/Photos/${image}`}
-                          alt={`Room Image ${index + 1}`}
-                          style={{ maxWidth: "150px", maxHeight: "150px", margin: "5px"}}
-                        />
-                      ))}
-                    </div>
-                    
                 </div>
-            </div>
+                    <div className="col-12 pe-3">
+                        <PropertyImageGallery images={images}/>
+                    </div>
+                
+                
+          </div>
 
             <div className="col-lg-12">
                     <div

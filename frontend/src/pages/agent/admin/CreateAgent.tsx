@@ -2,6 +2,7 @@ import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateAgent.module.css";
 import axios from "axios";
+import TextEditor from "../../../components/common/admin/TextEditor";
 
 const CreateAgent = () => {
   const [name, setName] = useState<string>("");
@@ -58,20 +59,12 @@ const CreateAgent = () => {
     }
   };
   return (
-    <>
-    <div className={styles.container_room}>
-      <div className="row">
-        <div className="offset-lg-3 col-lg-6">
-        <form className="container" onSubmit={handleSubmit}>
-        <div className="card" style={{ textAlign: "left" }}>
-          <div className="card-title">
-            <h2 style={{ textAlign: "center" }}>Add New Agent</h2>
-          </div>
-          <div className="card-body">
-            <div className="row">
-              {/* Name and Surname */}
-              <div className="col-lg-6">
-                <div className={styles.form_group}>
+
+    <div className={styles.container}>
+        <h2 className="mb-4 text-center">Create Agent</h2>
+        <form onSubmit={handleSubmit} style={{ overflow:"auto"}}>
+            <div className="row g-3 mx-0">
+            <div className="col-lg-6">
                   <label className="mb-2 fw-semibold" htmlFor="name">Name</label>
                   <input
                     id="name"
@@ -82,10 +75,8 @@ const CreateAgent = () => {
                     className="form-control"
                     required
                   />
-                </div>
               </div>
               <div className="col-lg-6">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="surname">Surname</label>
                   <input
                     id="surname"
@@ -96,14 +87,12 @@ const CreateAgent = () => {
                     className="form-control"
                     required
                   />
-                </div>
               </div>
 
               {/* Bio */}
               <div className="col-lg-12">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="bio">Bio</label>
-                  <textarea
+                  {/* <textarea
                     id="bio"
                     className="form-control"
                     rows={3}
@@ -111,13 +100,13 @@ const CreateAgent = () => {
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     required
-                  ></textarea>
-                </div>
+                  ></textarea> */}
+                  <TextEditor value={bio} onChange={setBio}/>
+
               </div>
 
               {/* Email and Phone Number */}
               <div className="col-lg-6">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="email">Email</label>
                   <input
                     id="email"
@@ -128,10 +117,8 @@ const CreateAgent = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                </div>
               </div>
               <div className="col-lg-6">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="phoneNumber">Phone Number</label>
                   <input
                     id="phoneNumber"
@@ -143,12 +130,10 @@ const CreateAgent = () => {
                     className="form-control"
                     required
                   />
-                </div>
               </div>
 
               {/* LinkedIn */}
               <div className="col-lg-12">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="linkedIn">LinkedIn</label>
                   <input
                     id="linkedIn"
@@ -159,12 +144,11 @@ const CreateAgent = () => {
                     onChange={(e) => setLinkedIn(e.target.value)}
                     required
                   />
-                </div>
+                
               </div>
 
               {/* Image Upload and Preview */}
               <div className="col-lg-6">
-                <div className={styles.form_group}>
                   <label className="mb-2 fw-semibold" htmlFor="profilePicture">Image</label>
                   <input
                     id="profilePicture"
@@ -173,9 +157,9 @@ const CreateAgent = () => {
                     onChange={imageUpload}
                     className="form-control form-control-md mt-2"
                   />
-                </div>
+                  {error && <small className="text-danger">{error}</small>}
               </div>
-              <div className="col-lg-6 mt-2">
+              <div className="col-lg-6 mt-4">
                 {profilePicture && (
                   <img
                     src={`http://localhost:5075/Photos/${profilePicture}`}
@@ -202,13 +186,8 @@ const CreateAgent = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </form>
-        </div>
-      </div>
+        </form>
     </div>
-  </>
   )
 }
 

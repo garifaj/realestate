@@ -15,5 +15,6 @@
         public List<string> Images { get; set; }
         public int AgentId { get; set; }
         public Agent Agent { get; set; }
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }

@@ -138,7 +138,7 @@ const SignupModal = ({ show, handleClose, handleLogin }: SignupModalProps) => {
               <div className="d-grid mb-2">
                 <button type="submit" className={`btn btn-primary ${styles.btn}`}>Sign up</button>
               </div>
-              <p className="text-center">Already have an account? <a href="#" className={styles.signup} onClick={handleLogin}> Login</a></p>
+              <p className="text-center">Already have an account? <a className={styles.signup} onClick={handleLogin}> Login</a></p>
             </form>
           </div>
         </div>

@@ -27,9 +27,21 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await axios.post("http://localhost:5075/api/logout", {}, { withCredentials: true });
-    navigate('/');
+    navigate('/');// Redirect to homepage after logging out
     setUser(null); // Clear user data from context
-    // Redirect to homepage after logging out
+  };
+
+  const handleAgentLinkClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault(); 
+    if (location.pathname !== "/") {
+      navigate("/"); // Redirect to the homepage
+    }
+    setTimeout(() => {
+      const agentSection = document.getElementById("agentSection");
+      if (agentSection) {
+        agentSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 100); // Slight delay to ensure DOM rendering
   };
 
   return (
@@ -65,9 +77,13 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li className="nav-item px-3 ">
-                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#" >
-                      Agents
-                    </Link>
+                  <Link
+                    className={`nav-link px-2 ${styles.navLink}`}
+                    to="#"
+                    onClick={handleAgentLinkClick}
+                  >
+                    Agents
+                  </Link>
                   </li>
                   <li className="nav-item px-3 ">
                     <Link className={`nav-link px-2 ${styles.navLink}`} to="#">Blogs</Link>
