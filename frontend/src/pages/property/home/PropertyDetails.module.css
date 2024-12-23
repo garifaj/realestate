@@ -1,6 +1,16 @@
 .imagesSection {
-  min-height: 450px;
+  position: relative;
+  display: flex;
+  min-height: 400px;
   text-align: center;
 }
 
+.showAllButton {
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  cursor: pointer;
+}
 
+.imagesSection img:hover {
+  cursor: pointer;
+}

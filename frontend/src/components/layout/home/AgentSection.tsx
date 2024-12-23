@@ -50,9 +50,7 @@ const AgentSection = () => {
                             <div className={`${styles.agentInfo} p-4`}>
                                 <h3 className={styles.agentName}>{agent.name + " " + agent.surname}</h3>
                                 <span>Real estate agent</span>
-                                <p className={styles.bio}>
-                                    {agent.bio}
-                                </p>
+                                <p className={styles.bio} dangerouslySetInnerHTML={{__html:agent.bio}}/> 
                                 <div className="d-flex justify-content-evenly">
                                     <div className={styles.icon_text}>
                                         <div className={styles.icon}>
