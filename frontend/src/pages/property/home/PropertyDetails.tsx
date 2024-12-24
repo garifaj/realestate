@@ -7,6 +7,7 @@ import styles from "./PropertyDetails.module.css";
 import BookingForm from "../../booking/home/BookingForm";
 import AgentInfoCard from "./AgentInfoCard";
 import PropertyImgCards from "./PropertyImgCards";
+import Footer from "../../../components/layout/home/Footer";
 
 const PropertyDetails = () => {
   const [property, setProperty] = useState<Property | null>(null);
@@ -76,6 +77,7 @@ const PropertyDetails = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

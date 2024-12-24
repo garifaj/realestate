@@ -3,6 +3,7 @@ import PropertyHomeCard from "../../../components/layout/home/PropertyHomeCard";
 import { useState } from "react";
 import { cities, propertyTypes } from "../../../constants/constants";
 import styles from "./AllProperties.module.css"
+import Footer from "../../../components/layout/home/Footer";
 
 const AllProperties = () => {
   const [selectedCity, setSelectedCity] = useState<string>("");
@@ -47,10 +48,11 @@ const AllProperties = () => {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row pb-5">
           <PropertyHomeCard selectedCity={selectedCity} selectedType={selectedType} />
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

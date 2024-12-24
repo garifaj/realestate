@@ -1,4 +1,5 @@
 import AgentSection from "./AgentSection";
+import Footer from "./Footer";
 import Header from "./Header"
 import HowItWorksSection from "./HowItWorksSection";
 import PropertiesSection from "./PropertiesSection";
@@ -11,6 +12,7 @@ const HomePage = () => {
       <HowItWorksSection/>
       <PropertiesSection/>
       <AgentSection/>
+      <Footer/>
     </>
   )
 }

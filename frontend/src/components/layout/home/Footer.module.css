@@ -1,0 +1,32 @@
+.footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 3rem;
+}
+
+.footer h2 {
+  color: var(--primary-color);
+  font-size: 1.7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.icons {
+  transition: fill 0.3s ease, stroke 0.3s ease;
+}
+
+.icons:hover svg path {
+  fill: var(--primary-color);
+  stroke: var(--primary-color);
+}
+
+.nav ul li a {
+  color: #999;
+}
+.nav ul li a:hover {
+  color: #fff;
+}
