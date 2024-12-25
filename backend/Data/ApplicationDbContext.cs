@@ -12,6 +12,7 @@ namespace backend.Data
         public DbSet<Agent> Agents { get; set; }
         public DbSet<Property> Property { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

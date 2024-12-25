@@ -15,6 +15,7 @@ import AllProperties from './pages/property/home/AllProperties';
 import BookingForm from './pages/booking/home/BookingForm';
 import BookingsTable from './pages/booking/admin/BookingsTable';
 import PropertyDetails from './pages/property/home/PropertyDetails';
+import ScrollToTop from './components/common/home/ScrollToTop';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <UserContextProvider>
+      <ScrollToTop/>
        <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path='/users' element={<UsersTable/>}/>
