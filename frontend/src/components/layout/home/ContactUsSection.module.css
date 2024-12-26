@@ -1,0 +1,21 @@
+.contactUsSection {
+  background-color: #fff;
+}
+
+.title {
+  text-align: center;
+  color: var(--primary-color);
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.info {
+  color: var(--primary-color);
+}
+
+.button {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  color: #fff !important;
+  padding: 8px 6rem !important;
+}

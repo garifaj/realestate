@@ -1,0 +1,51 @@
+body {
+  background-color: #fafafa !important;
+}
+.divbtn {
+  display: flex;
+  justify-content: end;
+  margin: 0.5rem;
+}
+
+#card {
+  max-width: 1100px;
+  margin: 0 auto;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+table {
+  table-layout: auto;
+}
+
+#headerRow {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+table td {
+  font-size: 14px;
+}
+
+.customCell1 {
+  max-width: 8rem;
+  max-height: 5rem;
+  overflow: hidden; /* Ensures overflow content is hidden */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
+  white-space: nowrap; /* Prevents text wrapping */
+}
+
+.customCell2 {
+  max-width: 12rem;
+  max-height: 5rem;
+  overflow: hidden; /* Ensures overflow content is hidden */
+  text-overflow: ellipsis; /* Adds ellipsis when text overflows */
+  white-space: nowrap;
+}
+
+.customCell3 {
+  max-width: 8rem;
+}
+
+.customCell4 {
+  max-width: 15rem;
+}

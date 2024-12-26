@@ -1,4 +1,5 @@
 import AgentSection from "./AgentSection";
+import ContactUsSection from "./ContactUsSection";
 import Footer from "./Footer";
 import Header from "./Header"
 import HowItWorksSection from "./HowItWorksSection";
@@ -12,6 +13,7 @@ const HomePage = () => {
       <HowItWorksSection/>
       <PropertiesSection/>
       <AgentSection/>
+      <ContactUsSection/>
       <Footer/>
     </>
   )

@@ -67,3 +67,13 @@ export type TablePaginationProps = {
     paginate: (pageNumber: number) => void;
     colSpan: number;
   }
+
+export type ContactUs = {
+    id: number;
+    name: string;
+    surname: string;
+    email: string;
+    subject: string;
+    message: string;
+    isAnswered: boolean;
+}
