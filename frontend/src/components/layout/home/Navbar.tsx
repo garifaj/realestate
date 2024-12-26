@@ -43,6 +43,19 @@ const Navbar = () => {
       }
     }, 100); // Slight delay to ensure DOM rendering
   };
+  const handleLinkClick = () => {
+    // Close the offcanvas manually using Bootstrap's method
+    const offcanvasElement = document.querySelector('#offcanvasNavbar');
+    const backdrop = document.querySelector('.offcanvas-backdrop');
+
+    if (offcanvasElement && backdrop) {
+      // Remove 'show' class to hide the offcanvas and the backdrop
+      offcanvasElement.classList.remove('show');
+      backdrop.classList.remove('show');
+      // Reset any overflow styles
+      document.body.style.overflow = '';
+    }
+  };
 
   return (
     <>
@@ -67,12 +80,12 @@ const Navbar = () => {
               <div className="offcanvas-body">
                 <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                   <li className="nav-item px-3">
-                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/">
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/" onClick={() => handleLinkClick()}>
                       Home
                     </Link>
                   </li>
                   <li className="nav-item px-3">
-                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/allproperties">
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="/allproperties" onClick={() => handleLinkClick()}>
                       Properties
                     </Link>
                   </li>
@@ -81,42 +94,59 @@ const Navbar = () => {
                     className={`nav-link px-2 ${styles.navLink}`}
                     to="#"
                     onClick={handleAgentLinkClick}
+                    data-bs-dismiss="offcanvas"
                   >
                     Agents
                   </Link>
                   </li>
                   <li className="nav-item px-3 ">
-                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#">Blogs</Link>
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#" onClick={() => handleLinkClick()}>Contact</Link>
                   </li>
                   {/* Profile Dropdown */}
                   <li className="nav-item dropdown px-3">
                     {!user ? (
                       <a
-                        className={`nav-link dropdown-toggle ${styles.navLink}`}
+                        className={`nav-link border rounded-5 px-2 ${styles.navLink}`}
                         href="#"
                         id={`${styles.dropdown}`}
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        Join us
+                        <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7C3.25 6.58579 3.58579 6.25 4 6.25L20 6.25C20.4142 6.25 20.75 6.58579 20.75 7Z" fill="#000000"></path> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25C20.4142 11.25 20.75 11.5858 20.75 12Z" fill="#000000"></path> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 17C20.75 17.4142 20.4142 17.75 20 17.75L4 17.75C3.58579 17.75 3.25 17.4142 3.25 17C3.25 16.5858 3.58579 16.25 4 16.25L20 16.25C20.4142 16.25 20.75 16.5858 20.75 17Z" fill="#000000"></path> </g></svg>
+                        <img src="http://localhost:5075/Photos/default.jpg" alt="Profile Icon" className={styles.profileIcon} />
                       </a>
                     ) : (
                       <a
-                        className={`nav-link dropdown-toggle ${styles.navLink}`}
+                        className={`nav-link border rounded-5 px-2 ${styles.navLink}`}
                         href="#"
                         id={`${styles.dropdown}`}
                         role="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        Hello, {user?.name}
+            
+                      <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 7C20.75 7.41421 20.4142 7.75 20 7.75L4 7.75C3.58579 7.75 3.25 7.41421 3.25 7C3.25 6.58579 3.58579 6.25 4 6.25L20 6.25C20.4142 6.25 20.75 6.58579 20.75 7Z" fill="#000000"></path> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 12C20.75 12.4142 20.4142 12.75 20 12.75L4 12.75C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25L20 11.25C20.4142 11.25 20.75 11.5858 20.75 12Z" fill="#000000"></path> <path fillRule="evenodd" clipRule="evenodd" d="M20.75 17C20.75 17.4142 20.4142 17.75 20 17.75L4 17.75C3.58579 17.75 3.25 17.4142 3.25 17C3.25 16.5858 3.58579 16.25 4 16.25L20 16.25C20.4142 16.25 20.75 16.5858 20.75 17Z" fill="#000000"></path> </g></svg>
+                      <div className={styles.initialsAvatar}>
+                        {user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </div>
+
                       </a>
                     )}
 
-                    <ul className="dropdown-menu" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
+                    <ul className="dropdown-menu dropdown-menu-end" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
+                      {user?.isAdmin && (
+                        <li>
+                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={() => handleLinkClick()} data-bs-dismiss="offcanvas">
+                          Admin Dashboard
+                        </Link>
+                      </li>
+                      )}
                       <li>
-                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={handleOpenLogin}>
+                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={handleOpenLogin} data-bs-dismiss="offcanvas">
                           My bookings
                         </Link>
                       </li>
@@ -124,12 +154,12 @@ const Navbar = () => {
                       {!user ? (
                         <>
                           <li>
-                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleOpenLogin}>
+                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleOpenLogin} data-bs-dismiss="offcanvas">
                               Sign in
                             </button>
                           </li>
                           <li>
-                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleSignupShow}>
+                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleSignupShow} data-bs-dismiss="offcanvas">
                               Register
                             </button>
                           </li>

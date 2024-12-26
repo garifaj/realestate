@@ -22,15 +22,22 @@
   animation-timeline: view();
   animation-range-start: 103vh, 111vh;
   animation-range-end: 110vh, 120vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .header #dropdownmenu {
-  box-shadow: 3px 3.5px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .header #dropdownmenu li button,
 .header #dropdownmenu li a {
   color: black;
+}
+
+.header #dropdown:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 @media (max-width: 991.98px) {
   .header .navLink {
@@ -39,13 +46,17 @@
     font-size: 20px;
   }
   .header #dropdown {
-    padding-left: 0.5rem;
+    display: none;
   }
 
   .header #dropdownmenu {
+    display: block;
     border: none;
-    box-shadow: 1px 1.5px 3px rgba(0, 0, 0, 0.2); /* Add shadow for dropdown */
-    /* Optionally, add a border radius for a softer look */
+    box-shadow: none;
+  }
+
+  .header #dropdownmenu li hr {
+    display: none;
   }
 
   .header .signin {
@@ -138,4 +149,25 @@
 .hero_content {
   z-index: 2;
   color: #fff;
+}
+
+.profileIcon {
+  width: 24px; /* Adjust the size as needed */
+  height: 24px;
+  border-radius: 50%; /* If you want a circular icon */
+  margin-left: 7px;
+}
+
+.initialsAvatar {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-color: #343a40;
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 8px;
 }
