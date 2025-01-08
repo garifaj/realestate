@@ -186,6 +186,8 @@ namespace backend.Controllers
                 return BadRequest("This property is already booked for the selected time.");
             }
 
+            var currentDateTimeUtc = DateTime.UtcNow;
+
             // Map DTO to Booking model
             var bookingDateUtc = new DateTime(
            bookingDto.BookingDate.Year,
@@ -202,6 +204,10 @@ namespace backend.Controllers
                 BookingDate = bookingDateUtc,
                 Status = "Pending",
             };
+            if (bookingDateUtc <= currentDateTimeUtc)
+            {
+                return BadRequest("You cannot book a property in the past.");
+            }
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
@@ -255,13 +261,25 @@ namespace backend.Controllers
         {
             if (_context.Bookings == null)
             {
-                return NotFound();
+                return NotFound(new { message = "The bookings context is unavailable." });
             }
 
             var booking = await _context.Bookings.FindAsync(id);
             if (booking == null)
             {
-                return NotFound();
+                return NotFound(new { message = $"Booking with ID {id} not found." });
+            }
+
+            if (booking.Status == "Canceled")
+            {
+                return BadRequest(new { message = "This booking has already been canceled." });
+            }
+
+            // Check if cancellation is within 1 day of the booking date
+            var currentDateTime = DateTime.UtcNow;
+            if (booking.BookingDate <= currentDateTime.AddDays(1))
+            {
+                return BadRequest(new { message = "You cannot cancel the booking within 1 day of the booking date." });
             }
 
             // Update the status to Canceled
@@ -273,6 +291,10 @@ namespace backend.Controllers
 
             return Ok(new { message = "The booking was canceled successfully.", booking });
         }
+
+
+
+
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBooking(int id)

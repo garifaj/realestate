@@ -17,6 +17,7 @@ import BookingsTable from './pages/booking/admin/BookingsTable';
 import PropertyDetails from './pages/property/home/PropertyDetails';
 import ScrollToTop from './components/common/home/ScrollToTop';
 import ContactUsTable from './pages/contact/ContactUsTable';
+import MyBookings from './pages/booking/home/MyBookings';
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
 
         <Route path='/bookingtest' element={<BookingForm/>}/>
         <Route path='/bookings' element={<BookingsTable/>}/>
+        <Route path='/mybookings' element={<MyBookings/>}/>
 
         <Route path='/contactus' element={<ContactUsTable/>}/>
 

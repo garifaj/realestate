@@ -152,17 +152,17 @@
 }
 
 .profileIcon {
-  width: 24px; /* Adjust the size as needed */
-  height: 24px;
+  width: 26px; /* Adjust the size as needed */
+  height: 26px;
   border-radius: 50%; /* If you want a circular icon */
   margin-left: 7px;
 }
 
 .initialsAvatar {
   display: inline-block;
-  width: 24px;
-  height: 24px;
-  background-color: #343a40;
+  width: 26px;
+  height: 26px;
+  background-color: var(--primary-color);
   color: #ffffff;
   border-radius: 50%;
   text-align: center;

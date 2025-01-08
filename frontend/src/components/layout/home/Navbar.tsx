@@ -137,7 +137,7 @@ const Navbar = () => {
                       </a>
                     )}
 
-                    <ul className="dropdown-menu dropdown-menu-end" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
+                    <ul className="dropdown-menu dropdown-menu-end me-3" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
                       {user?.isAdmin && (
                         <li>
                         <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={() => handleLinkClick()} data-bs-dismiss="offcanvas">
@@ -146,7 +146,7 @@ const Navbar = () => {
                       </li>
                       )}
                       <li>
-                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={handleOpenLogin} data-bs-dismiss="offcanvas">
+                        <Link className={`dropdown-item ${styles.navLink}`} to='/mybookings' onClick={() => handleLinkClick()} >
                           My bookings
                         </Link>
                       </li>
