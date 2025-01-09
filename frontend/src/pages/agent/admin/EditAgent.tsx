@@ -46,7 +46,7 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   axios.put(`http://localhost:5075/api/agents/${agentid}`, agentData)
   .then(() =>{
     alert("Edited agent successfully!");
-    navigate("/agents");
+    navigate("/admin/agents");
   })
   .catch((err) =>{
     console.log(err.message)
@@ -200,7 +200,7 @@ return (
               Edit
             </button>
             &nbsp;
-            <Link to="/agents" className="btn btn-danger">
+            <Link to="/admin/agents" className="btn btn-danger">
               Back
             </Link>
           </div>

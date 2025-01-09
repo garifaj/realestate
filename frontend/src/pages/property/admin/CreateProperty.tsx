@@ -53,7 +53,7 @@ const CreateProperty = () => {
         axios.post("http://localhost:5075/api/properties", propertyData)
         .then(() =>{
             alert("Created property successfully!");
-            navigate("/properties");
+            navigate("/admin/properties");
         })
         .catch((err) =>{
             console.log(err.message)
@@ -254,7 +254,7 @@ const CreateProperty = () => {
                         Create
                       </button>
                       &nbsp;
-                      <Link to="/properties" className="btn btn-danger">
+                      <Link to="/admin/properties" className="btn btn-danger">
                         Back
                       </Link>
                     </div>

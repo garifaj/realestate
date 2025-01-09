@@ -81,7 +81,7 @@ const AgentsTable = () => {
         </div>
         <div className="card-body">
           <div className={styles.divbtn}>
-            <Link to="create" id="#createbutton" className="btn btn-success">
+            <Link to="/agents/create" id="#createbutton" className="btn btn-success">
               Add New +
             </Link>
           </div>

@@ -27,7 +27,7 @@ const CreateAgent = () => {
     axios.post("http://localhost:5075/api/agents", agentData)
     .then(() =>{
       alert("Created agent successfully!");
-      navigate("/agents");
+      navigate("/admin/agents");
     })
     .catch((err) =>{
       console.log(err.message)
@@ -180,7 +180,7 @@ const CreateAgent = () => {
                     Create
                   </button>
                   &nbsp;
-                  <Link to="/agents" className="btn btn-danger">
+                  <Link to="/admin/agents" className="btn btn-danger">
                     Back
                   </Link>
                 </div>

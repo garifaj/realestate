@@ -39,7 +39,7 @@ const EditUser = () => {
     axios.put(`http://localhost:5075/api/users/${userid}`, userData)
       .then(() => {
         alert("Edited user successfully.");
-        navigate("/users");
+        navigate("/admin/users");
       })
       .catch((err) => {
         console.log(err.message);
@@ -147,7 +147,7 @@ const EditUser = () => {
                           Update
                         </button>
                         &nbsp;
-                        <Link to="/users" className="btn btn-danger">
+                        <Link to="/admin/users" className="btn btn-danger">
                           Back
                         </Link>
                       </div>

@@ -1,0 +1,27 @@
+#link {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+#navLink[aria-current="page"] {
+  background-color: rgb(243, 245, 248);
+}
+#navLink[aria-current="page"] span {
+  color: var(--primary-color) !important;
+  background-color: transparent !important;
+  font-weight: bold;
+}
+
+.initialsAvatar {
+  display: inline-block;
+  width: 26px;
+  height: 26px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 24px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 8px;
+}

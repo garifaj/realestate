@@ -1,29 +1,13 @@
-import { useContext, useState } from 'react';
+import { useContext} from 'react';
 import styles from './Header.module.css'; // Import the CSS module
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../../context/UserContext';
-import LoginModal from '../../common/home/LoginModal';
-import SignupModal from '../../common/home/SignupModal';
+
 
 const Navbar = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
-
-  const handleOpenLogin = () => {
-    setShowSignup(false);
-    setShowLogin(true);
-
-  }
-  const handleCloseLogin = () => setShowLogin(false);
-
-  const handleSignupShow = () => {
-    setShowLogin(false); // Close login modal when signup is opened
-    setShowSignup(true);
-  };
-  const handleCloseSignup = () => setShowSignup(false);
 
   const handleLogout = async () => {
     await axios.post("http://localhost:5075/api/logout", {}, { withCredentials: true });
@@ -140,7 +124,7 @@ const Navbar = () => {
                     <ul className="dropdown-menu dropdown-menu-end me-3" id={`${styles.dropdownmenu}`} aria-labelledby="profileDropdown">
                       {user?.isAdmin && (
                         <li>
-                        <Link className={`dropdown-item ${styles.navLink}`} to='#' onClick={() => handleLinkClick()} data-bs-dismiss="offcanvas">
+                        <Link className={`dropdown-item ${styles.navLink}`} to='/admin/dashboard' onClick={() => handleLinkClick()}>
                           Admin Dashboard
                         </Link>
                       </li>
@@ -154,14 +138,14 @@ const Navbar = () => {
                       {!user ? (
                         <>
                           <li>
-                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleOpenLogin} data-bs-dismiss="offcanvas">
+                            <Link to={"/login"} className={`dropdown-item ${styles.navLink}`} >
                               Sign in
-                            </button>
+                            </Link>
                           </li>
                           <li>
-                            <button className={`dropdown-item ${styles.navLink}`} onClick={handleSignupShow} data-bs-dismiss="offcanvas">
+                            <Link to={"/signup"} className={`dropdown-item ${styles.navLink}`} >
                               Register
-                            </button>
+                            </Link>
                           </li>
                         </>
 
@@ -180,8 +164,6 @@ const Navbar = () => {
             </div>
           </div>
         </nav>
-        <LoginModal show={showLogin} handleClose={handleCloseLogin} handleSignupShow={handleSignupShow} />
-        <SignupModal show={showSignup} handleClose={handleCloseSignup} handleLogin={handleOpenLogin} />
       </header>
     </>
   )

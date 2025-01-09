@@ -3,34 +3,17 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { UserContext } from "../../../context/UserContext";
-import { useParams } from "react-router-dom";
-import LoginModal from "../../../components/common/home/LoginModal";
-import SignupModal from "../../../components/common/home/SignupModal";
+import { Link, useParams } from "react-router-dom";
 
 
 
 const BookingForm: React.FC = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSignup, setShowSignup] = useState(false);
   const {user} = useContext(UserContext);
   const {propertyid} = useParams();
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
-
-  const handleOpenLogin = () => {
-    setShowSignup(false);
-    setShowLogin(true);
-
-  }
-  const handleCloseLogin = () => setShowLogin(false);
-
-  const handleSignupShow = () => {
-    setShowLogin(false); // Close login modal when signup is opened
-    setShowSignup(true);
-  };
-  const handleCloseSignup = () => setShowSignup(false);
 
   useEffect(() => {
     if (selectedDate) {
@@ -151,12 +134,12 @@ const BookingForm: React.FC = () => {
         {!user && (
             <div className="text-start ms-3 fs-6 mb-2">
             Do you want to request a tour?{" "}
-            <a
-              onClick={handleOpenLogin}
+            <Link
+              to={"/login"}
               style={{ textDecoration: "none", color: "#009dff" }}
             >
               Login
-            </a>
+            </Link>
           </div>
           )}
         {error && <div className="text-danger mb-2 text-center">{error}</div>}       
@@ -167,8 +150,6 @@ const BookingForm: React.FC = () => {
         </button>
       </form>
     </div>
-     <LoginModal show={showLogin} handleClose={handleCloseLogin} handleSignupShow={handleSignupShow}/>
-     <SignupModal show={showSignup} handleClose={handleCloseSignup} handleLogin={handleOpenLogin} />
     </>
     
   );
