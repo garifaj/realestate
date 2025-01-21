@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import styles from "./DashboardCards.module.css"
 
 
 const DashboardCards = () => {
@@ -29,12 +30,12 @@ const DashboardCards = () => {
     })
 
   return (
+    
     <>
-    <div className="container-fluid">
         <h3 className="py-2">Dashboard</h3>
         <div className="row">
             <div className="col-lg-3 col-md-6 col-sm-6 py-2">
-                <div className="card rounded-4 border-0 shadow py-1">
+                <div className="card rounded-4 border-0 py-1" id={styles.cardShadow} >
                     <div className="card-body">
                     <div className="d-flex flex-wrap align-items-center">
                         <div className="col-3">
@@ -49,7 +50,7 @@ const DashboardCards = () => {
                 </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6 py-2">
-                <div className="card rounded-4 border-0 shadow  py-1">
+                <div className="card rounded-4 border-0 py-1" id={styles.cardShadow}>
                     <div className="card-body">
                     <div className="d-flex flex-wrap align-items-center">
                         <div className="col-3">
@@ -64,7 +65,7 @@ const DashboardCards = () => {
                 </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6 py-2">
-                <div className="card rounded-4 border-0 shadow  py-1">
+                <div className="card rounded-4 border-0  py-1" id={styles.cardShadow}>
                     <div className="card-body">
                     <div className="d-flex flex-wrap align-items-center">
                         <div className="col-3">
@@ -79,7 +80,7 @@ const DashboardCards = () => {
                 </div>
             </div>
             <div className="col-lg-3 col-md-6 col-sm-6 py-2">
-                <div className="card rounded-4 border-0 shadow  py-1">
+                <div className="card rounded-4 border-0 py-1" id={styles.cardShadow}>
                     <div className="card-body">
                     <div className="d-flex flex-wrap align-items-center">
                         <div className="col-3">
@@ -95,8 +96,6 @@ const DashboardCards = () => {
             </div>
             
         </div>
-    </div>
-      
     </>
   )
 }

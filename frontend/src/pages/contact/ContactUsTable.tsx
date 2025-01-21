@@ -101,22 +101,7 @@ const ContactUsTable = () => {
                                             </td>
                                             <td>{contact.email}</td>
                                             <td>{contact.subject}</td>
-                                            <td>{contact.message}</td>
-                                            {/* <td>
-                                                <select
-                                                    value={contact.isAnswered ? "true" : "false"}
-                                                    onChange={(e) =>
-                                                        handleAnswerChange(
-                                                            contact.id,
-                                                            e.target.value === "true"
-                                                        )
-                                                    }
-                                                    className="form-select-sm"
-                                                >
-                                                    <option value="true">Yes</option>
-                                                    <option value="false">No</option>
-                                                </select>
-                                            </td> */}
+                                            <td style={{maxWidth:"40rem"}}>{contact.message}</td>
                                             <td>
                                               <div className="form-check form-switch d-flex justify-content-center">
                                               <input

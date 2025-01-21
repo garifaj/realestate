@@ -10,7 +10,7 @@ body {
 #card {
   max-width: 1100px;
   margin: 0 auto;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 table {
@@ -27,7 +27,7 @@ table td {
 }
 
 .customCell1 {
-  max-width: 8rem;
+  max-width: 100%;
   max-height: 5rem;
   overflow: hidden; /* Ensures overflow content is hidden */
   text-overflow: ellipsis; /* Adds ellipsis when text overflows */
@@ -35,7 +35,7 @@ table td {
 }
 
 .customCell2 {
-  max-width: 9rem;
+  max-width: 100%;
   max-height: 5rem;
   overflow: hidden; /* Ensures overflow content is hidden */
   text-overflow: ellipsis; /* Adds ellipsis when text overflows */
@@ -43,14 +43,12 @@ table td {
 }
 
 .customCell3 {
-  max-width: 9rem;
+  max-width: 100%;
 }
 
 .customCell3 strong {
   font-weight: 640;
 }
-
-
 
 a:hover {
   cursor: pointer;

@@ -96,18 +96,18 @@ const BookingsTable = () => {
                   currentBookings.map((booking) => (
                     <tr key={booking.id}>
                       <td>{booking.id}</td>
-                      <td>
+                      <td style={{maxWidth:"10rem"}} >
                         <div className={styles.customCell1}>
                          {booking.property.title}
                          </div>
                       </td>
-                      <td>
+                      <td style={{maxWidth:"9rem"}} >
                         <div className={styles.customCell2}>
                           {`${booking.property.address}, ${booking.property.city}`}
                         </div>
                         
                       </td>
-                      <td>
+                      <td style={{maxWidth:"9rem"}} >
                         <div className={styles.customCell3}>
                         <strong>{`${booking.user.name} ${booking.user.surname}`}</strong>
                         <br />
