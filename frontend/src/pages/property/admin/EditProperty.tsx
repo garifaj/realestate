@@ -6,6 +6,7 @@ import { Agent } from "../../../context/types";
 import { cities, propertyTypes } from "../../../constants/constants";
 import PropertyImageGallery from "./PropertyImageGallery";
 import TextEditor from "../../../components/common/admin/TextEditor";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 
 
@@ -75,11 +76,13 @@ const EditProperty = () => {
 
     axios.put(`http://localhost:5075/api/properties/${propertyid}`, propertyData)
     .then(() =>{
-        alert("Edited property successfully!");
-        navigate("/admin/properties");
+        toast.success("Property updated successfully!", {
+            onClose: () => navigate("/admin/properties"),
+        });
     })
     .catch((err) =>{
         console.log(err.message)
+        toast.error("Failed to update property. Please try again.");
     });
   }
 
@@ -116,6 +119,14 @@ const EditProperty = () => {
   };
   return (
     <>
+    <ToastContainer
+      position="top-center"
+      autoClose={800}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+    />
       <div className={styles.container}>
         <h2 className="mb-4 text-center">Edit Property</h2>
         <form onSubmit={handleSubmit} style={{overflow:"auto"}}>

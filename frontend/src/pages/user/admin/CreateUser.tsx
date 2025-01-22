@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
 import axios from "axios";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const CreateUser = () => {
   const [name, setName] = useState<string>("");
@@ -20,16 +21,26 @@ const CreateUser = () => {
 
     axios.post("http://localhost:5075/api/users", userData)
       .then(() => {
-        alert("Created user successfully.");
-        navigate("/admin/users");
+        toast.success("User created successfully!", {
+          onClose: () => navigate("/admin/users"),
+        });
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error("Failed to create user. Please try again.");
       });
   };
 
   return (
     <>
+    <ToastContainer
+      position="top-center"
+      autoClose={800}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className={styles.container_room}>
         <div className="row">
           <div className="offset-lg-3 col-lg-6">

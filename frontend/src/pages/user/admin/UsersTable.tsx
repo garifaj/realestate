@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { User } from "../../../context/types";
 import TablePagination from "../../../components/common/admin/TablePagination";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 const UsersTable = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState<boolean>(true);
   const usersPerPage = 7;
   const navigate = useNavigate();
 
@@ -16,18 +19,20 @@ const UsersTable = () => {
     navigate("/users/edit/" + id);
   };
 
-  const deleteFunction = (id:number) => {
-    if(window.confirm("Are you sure you want to delete this user?")) {
-      axios.delete(`http://localhost:5075/api/users/${id}`)
-      .then(() =>{
-        alert("Deleted successfully!");
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log(err.message);
-      })
+  const deleteFunction = (id: number) => {
+    if (window.confirm("Are you sure you want to delete this user?")) {
+      axios
+        .delete(`http://localhost:5075/api/users/${id}`)
+        .then(() => {
+          toast.info("User deleted successfully!"); 
+          setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+        })
+        .catch((err) => {
+          console.log(err.message);
+          toast.error("Failed to delete user. Please try again.");
+        });
     }
-  }
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -36,6 +41,8 @@ const UsersTable = () => {
         setUsers(response.data);
       } catch (error) {
         console.error(error);
+      }finally{
+        setLoading(false);
       }
     };
     fetchUsers();
@@ -59,6 +66,14 @@ const UsersTable = () => {
   };
   return (
     <div className="container py-5">
+      <ToastContainer
+      position="top-center"
+      autoClose={1500}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className="card" id={styles.card}>
         <div className="card-title">
           <h2 style={{ textAlign: "center" }}>Users table</h2>
@@ -81,6 +96,11 @@ const UsersTable = () => {
             />
           </div>
           <div className="table-responsive">
+            {loading ? (
+              <div style={{ textAlign: "center", margin: "20px 0" }}>
+              <PulseLoader color="#000000" size={20}  />
+              </div>
+            ) : (
             <table className="table table-bordered" style={{ minWidth: "850px" }}>
               <thead className="bg-dark text-white">
                 <tr id={styles.headerRow}>
@@ -174,7 +194,6 @@ const UsersTable = () => {
                           </a>
                         </div>
                       </td>
-
                     </tr>
                   ))
                 )}
@@ -191,6 +210,7 @@ const UsersTable = () => {
                 </tr>
               </tfoot>
             </table>
+            )}
           </div>
         </div>
       </div>

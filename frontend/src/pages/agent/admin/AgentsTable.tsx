@@ -5,6 +5,8 @@ import styles from "./AgentsTable.module.css";
 import { Agent } from "../../../context/types";
 import TablePagination from "../../../components/common/admin/TablePagination";
 import AgentsPropertiesModal from "./AgentsPropertiesModal";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 
 const AgentsTable = () => {
@@ -13,6 +15,7 @@ const AgentsTable = () => {
   const [search, setSearch] = useState("");
   const [showPropertyModal, setShowPropertyModal] = useState(false);
   const [selectedAgent, setSelectedAgent] = useState<Agent|null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const agentsPerPage = 3;
   const navigate = useNavigate();
 
@@ -25,11 +28,12 @@ const AgentsTable = () => {
       axios
         .delete(`http://localhost:5075/api/agents/${id}`)
         .then(() => {
-          alert("Deleted successfully!");
-          window.location.reload();
+          toast.info("Agent deleted successfully!");
+          setAgents((prevAgents) => prevAgents.filter((agent) => agent.id !== id));
         })
         .catch((err) => {
           console.log(err.message);
+          toast.error("Failed to delete agent. Please try again.");
         });
     }
   };
@@ -41,6 +45,8 @@ const AgentsTable = () => {
         setAgents(response.data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchAgents();
@@ -75,6 +81,14 @@ const AgentsTable = () => {
 
   return (
     <div className="container py-5">
+      <ToastContainer
+      position="top-center"
+      autoClose={1500}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className="card" id={styles.card}>
         <div className="card-title">
           <h2 style={{ textAlign: "center" }}>Agents Table</h2>
@@ -97,7 +111,12 @@ const AgentsTable = () => {
             />
           </div>
           <div className="table-responsive">
-            <table className="table table-bordered" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
+            {loading ? (
+              <div style={{ textAlign: "center", margin: "20px 0" }}>
+              <PulseLoader color="#000000" size={20}  />
+              </div>
+            ) : (
+              <table className="table table-bordered" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
               <thead className="bg-dark text-white">
                 <tr id={styles.headerRow}>
                   <td>ID</td>
@@ -233,6 +252,8 @@ const AgentsTable = () => {
                 />
               </tfoot>
             </table>
+            )}
+           
           </div>
         </div>
       </div>

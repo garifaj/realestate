@@ -6,6 +6,7 @@ import { cities, propertyTypes } from "../../../constants/constants";
 import { Agent } from "../../../context/types";
 import PropertyImageGallery from "./PropertyImageGallery";
 import TextEditor from "../../../components/common/admin/TextEditor";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const CreateProperty = () => {
     const [title, setTitle] = useState<string>("");
@@ -52,11 +53,13 @@ const CreateProperty = () => {
 
         axios.post("http://localhost:5075/api/properties", propertyData)
         .then(() =>{
-            alert("Created property successfully!");
-            navigate("/admin/properties");
+            toast.success("Property created successfully!", {
+                onClose: () => navigate("/admin/properties")
+            });
         })
         .catch((err) =>{
             console.log(err.message)
+            toast.error("Failed to create property. Please try again.");
         });
     }
 
@@ -94,6 +97,14 @@ const CreateProperty = () => {
 
   return (
     <div className={styles.container}>
+        <ToastContainer
+        position="top-center"
+        autoClose={800}
+        hideProgressBar={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
+        />
         <h2 className="mb-4 text-center">Add New Property</h2>
         <form onSubmit={handleSubmit} style={{ overflow:"auto"}}>
             <div className="row g-3 mx-0">

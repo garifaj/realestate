@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styles from "./ContactUsSection.module.css";
 import axios from "axios";
 import { UserContext } from "../../../context/UserContext";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const ContactUsSection = () => {
     const [name, setName] = useState<string>("");
@@ -29,7 +30,7 @@ const ContactUsSection = () => {
 
         axios.post("http://localhost:5075/api/contactus", contactData)
         .then(() => {
-            alert("Message sent successfully!");
+            toast.success("Message sent successfully!");
             setName("");
             setSurname("");
             setEmail("");
@@ -43,6 +44,14 @@ const ContactUsSection = () => {
 
   return (
     <section className={`${styles.contactUsSection} py-5`}>
+        <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
+        />
         <div className="container">
             <h1 className={styles.title}>Contact Us</h1>
             <div className="row">

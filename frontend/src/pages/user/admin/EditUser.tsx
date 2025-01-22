@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./EditUser.module.css";
 import axios from "axios";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const EditUser = () => {
   const { userid } = useParams<{ userid: string }>();
@@ -38,16 +39,26 @@ const EditUser = () => {
 
     axios.put(`http://localhost:5075/api/users/${userid}`, userData)
       .then(() => {
-        alert("Edited user successfully.");
-        navigate("/admin/users");
+        toast.success("User updated successfully!", {
+          onClose: () => navigate("/admin/users"),
+        });
       })
       .catch((err) => {
         console.log(err.message);
+        toast.error("Failed to update user. Please try again.");
       });
   };
 
   return (
     <>
+    <ToastContainer
+      position="top-center"
+      autoClose={800}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className={styles.container_room}>
         <div className="row">
           <div className="offset-lg-3 col-lg-6">

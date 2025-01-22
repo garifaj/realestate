@@ -5,11 +5,14 @@ import axios from "axios";
 import styles from "./BookingsTable.module.css";
 import BookingDetailsModal from "./BookingDetailsModal";
 import TablePagination from "../../../components/common/admin/TablePagination";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 const BookingsTable = () => {
     const [bookings, setBookings] = useState<Booking[]>([]);
     const [selectedBooking, setSelectedBooking] = useState<Booking|null>(null);
     const [showBookingModal, setShowBookingModal] = useState(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState(1);
     const bookingsPerPage = 4;
 
@@ -20,6 +23,8 @@ const BookingsTable = () => {
                 setBookings(response.data); 
             } catch (error) {
                 console.error(error)
+            }finally {
+                setLoading(false);
             }
         }
 
@@ -27,17 +32,26 @@ const BookingsTable = () => {
     },[])
 
     const cancelBooking = (bookingId: number) => {
-      if(window.confirm("Are you sure you want to cancel this booking?")) {
-          axios.put(`http://localhost:5075/api/bookings/cancel/${bookingId}`)
+      if (window.confirm("Are you sure you want to cancel this booking?")) {
+        axios
+          .put(`http://localhost:5075/api/bookings/cancel/${bookingId}`)
           .then(() => {
-              alert("Booking has been canceled successfully.");
-              window.location.reload();
+            // Update the bookings list in state
+            setBookings((prevBookings) =>
+              prevBookings.map((booking) =>
+                booking.id === bookingId
+                  ? { ...booking, status: "Canceled" }
+                  : booking
+              )
+            );
+            toast.success("Booking has been canceled successfully.");
           })
           .catch((error) => {
-              console.log(error);
+            console.error(error);
+            toast.error("Failed to cancel booking. Please try again.");
           });
       }
-  }
+    };
 
     const handleOpenBookingModal = (booking: Booking) =>{
       setShowBookingModal(true);
@@ -61,6 +75,14 @@ const BookingsTable = () => {
 
   return (
     <div className="container py-5">
+      <ToastContainer
+      position="top-center"
+      autoClose={1500}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className="card" id={styles.card}>
         <div className="card-title">
           <h2 className="mb-0 text-center">Bookings Table</h2>
@@ -69,7 +91,12 @@ const BookingsTable = () => {
           <div className={styles.divbtn}>
           </div>
           <div className="table-responsive">
-            <table className="table table-bordered table-hover" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
+            {loading ? (
+              <div style={{ textAlign: "center", margin: "20px 0" }}>
+              <PulseLoader color="#000000" size={20}  />
+              </div>
+            ) : (
+<table className="table table-bordered table-hover" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
               <thead className="bg-dark text-white  ">
                 <tr id={styles.headerRow}>
                   <td>ID</td>
@@ -193,6 +220,7 @@ const BookingsTable = () => {
                 />
               </tfoot> 
             </table>
+            )} 
           </div>
         </div>
       </div>

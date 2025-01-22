@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateAgent.module.css";
 import axios from "axios";
 import TextEditor from "../../../components/common/admin/TextEditor";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const CreateAgent = () => {
   const [name, setName] = useState<string>("");
@@ -17,22 +18,25 @@ const CreateAgent = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const agentData = {name, surname, email, phoneNumber, bio, linkedIn, profilePicture};
-
-    //Check if there are any errors
+    const agentData = { name, surname, email, phoneNumber, bio, linkedIn, profilePicture };
+  
+    // Check if there are any errors
     if (error) {
       return; // Stops form submission
     }
-
-    axios.post("http://localhost:5075/api/agents", agentData)
-    .then(() =>{
-      alert("Created agent successfully!");
-      navigate("/admin/agents");
-    })
-    .catch((err) =>{
-      console.log(err.message)
-    });
-  };
+  
+    axios
+      .post("http://localhost:5075/api/agents", agentData)
+      .then(() => {
+        toast.success("Agent created successfully!", {
+          onClose: () => navigate("/admin/agents"), // Navigate after toast is closed
+        });
+      })
+      .catch((err) => {
+        console.error(err.message);
+        toast.error("Failed to create agent. Please try again."); // Error toast
+      });
+  }
 
   const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -61,6 +65,14 @@ const CreateAgent = () => {
   return (
 
     <div className={styles.container}>
+      <ToastContainer
+      position="top-center"
+      autoClose={1000}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
         <h2 className="mb-4 text-center">Create Agent</h2>
         <form onSubmit={handleSubmit} style={{ overflow:"auto"}}>
             <div className="row g-3 mx-0">

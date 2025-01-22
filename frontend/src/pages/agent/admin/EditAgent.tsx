@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./EditAgent.module.css";
 import axios from "axios";
 import TextEditor from "../../../components/common/admin/TextEditor";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const EditAgent = () => {
 
@@ -45,11 +46,14 @@ const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
   const agentData = {id ,name, surname, email, phoneNumber, bio, linkedIn, profilePicture};
   axios.put(`http://localhost:5075/api/agents/${agentid}`, agentData)
   .then(() =>{
-    alert("Edited agent successfully!");
-    navigate("/admin/agents");
+    toast.success("Agent updated successfully!", {
+      onClose: () => navigate("/admin/agents"),
+    });
+    
   })
   .catch((err) =>{
-    console.log(err.message)
+    console.log(err.message);
+    toast.error("Failed to update agent. Please try again.");
   });
 };
 
@@ -71,6 +75,14 @@ const imageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 };
 return (
   <div className={styles.container}>
+    <ToastContainer
+      position="top-center"
+      autoClose={800}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
   <h2 className="mb-4 text-center">Edit Agent</h2>
   <form onSubmit={handleSubmit} style={{ overflow:"auto"}}>
       <div className="row g-3 mx-0">

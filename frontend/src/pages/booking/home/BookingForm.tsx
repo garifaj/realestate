@@ -3,7 +3,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { UserContext } from "../../../context/UserContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 
 
@@ -14,6 +15,7 @@ const BookingForm: React.FC = () => {
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedDate) {
@@ -75,16 +77,28 @@ const BookingForm: React.FC = () => {
         bookingDate: bookingDateUTC.toISOString(),
         status: "Pending",
       });
-      alert("Booking made successfully!");
-      window.location.reload();
+      toast.success("Booking made successfully!" , {
+        onClose: () => navigate("/mybookings"),
+      });
+      
     } catch (error) {
       setError("Booking failed. Please try again.");
+      console.error("Error making booking:", error);
+      toast.error("Booking failed. Please try again.");
     }
   };
   
 
   return (
     <>
+    <ToastContainer
+      position="top-center"
+      autoClose={800}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
     <div className="card shadow py-4 px-4 mt-5 mb-5 rounded-5 ">
       <h4 className="text-center mb-3">Request a tour</h4>
       <form onSubmit={handleSubmit}>

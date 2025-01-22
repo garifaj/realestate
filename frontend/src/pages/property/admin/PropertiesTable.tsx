@@ -6,6 +6,8 @@ import { Agent, Property } from "../../../context/types.tsx";
 import { cities, propertyTypes } from "../../../constants/constants.tsx" // Assuming you have these arrays in a constants file.
 import PropertyFilters from "./PropertyFilters.tsx";
 import TablePagination from "../../../components/common/admin/TablePagination.tsx";
+import { Slide, toast, ToastContainer } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 
 const PropertiesTable = () => {
@@ -16,6 +18,7 @@ const PropertiesTable = () => {
   const [selectedCity, setSelectedCity] = useState<string>("");
   const [selectedType, setSelectedType] = useState<string>("");
   const [selectedAgent, setSelectedAgent] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   const propertiesPerPage = 4;
   const navigate = useNavigate();
@@ -29,11 +32,12 @@ const PropertiesTable = () => {
       axios
         .delete(`http://localhost:5075/api/properties/${id}`)
         .then(() => {
-          alert("Deleted successfully!");
-          window.location.reload();
+          toast.info("Property deleted successfully!");
+          setProperties((prevProperties) => prevProperties.filter((property) => property.id !== id));
         })
         .catch((err) => {
           console.log(err.message);
+          toast.error("Failed to delete property. Please try again.");
         });
     }
   };
@@ -45,6 +49,8 @@ const PropertiesTable = () => {
         setProperties(response.data);
       } catch (error) {
         console.error(error);
+      }finally{
+        setLoading(false);
       }
     }
 
@@ -89,6 +95,14 @@ const PropertiesTable = () => {
 
   return (
     <div className="container py-5">
+      <ToastContainer
+      position="top-center"
+      autoClose={1500}
+      hideProgressBar={false}
+      pauseOnHover={false}
+      theme="light"
+      transition={Slide}
+      />
       <div className="card" id={styles.card}>
         <div className="card-title">
           <h2 className="mb-0" style={{ textAlign: "center" }}>Properties Table</h2>
@@ -113,7 +127,12 @@ const PropertiesTable = () => {
           search = {search}
           />
           <div className="table-responsive">
-            <table className="table table-bordered table-hover" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
+            {loading ? (
+              <div style={{ textAlign: "center", margin: "20px 0" }}>
+              <PulseLoader color="#000000" size={20}  />
+              </div>
+            ) : (
+<table className="table table-bordered table-hover" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
               <thead className="bg-dark text-white  ">
                 <tr id={styles.headerRow}>
                   <td>ID</td>
@@ -247,6 +266,7 @@ const PropertiesTable = () => {
                 />
               </tfoot>
             </table>
+            )}
           </div>
         </div>
       </div>

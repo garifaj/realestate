@@ -3,6 +3,7 @@ import styles from "./PropertyHomeCard.module.css";
 import { useEffect, useState } from "react";
 import { Property } from "../../../context/types";
 import axios from "axios";
+import { PulseLoader } from "react-spinners";
 
 type PropertyHomeCardProps = {
   selectedCity?: string;
@@ -12,6 +13,7 @@ type PropertyHomeCardProps = {
 
 const PropertyHomeCard = ({ selectedCity, selectedType, limit }: PropertyHomeCardProps) => {
   const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     async function fetchProperties() {
@@ -20,6 +22,8 @@ const PropertyHomeCard = ({ selectedCity, selectedType, limit }: PropertyHomeCar
         setProperties(response.data);
       } catch (error) {
         console.error(error);
+      }finally {
+        setLoading(false);
       }
     }
 
@@ -39,7 +43,11 @@ const PropertyHomeCard = ({ selectedCity, selectedType, limit }: PropertyHomeCar
     <>
       <div className="container">
         <div className="row">
-          {filteredProperties.length === 0 ? (
+          {loading ? (
+            <div style={{ textAlign: "center", margin: "20px 0" }}>
+            <PulseLoader color="#000000" size={20}  />
+            </div>
+          ) : filteredProperties.length === 0 ? (
             <div className="col-12 py-5 text-center">
             <p className="text-muted">No properties available for the selected city and type.</p>
           </div>
@@ -109,8 +117,7 @@ const PropertyHomeCard = ({ selectedCity, selectedType, limit }: PropertyHomeCar
                 </div>
             ))}
             </>
-          )}
-          
+          )}   
         </div>
       </div>
     </>
