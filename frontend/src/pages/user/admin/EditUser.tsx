@@ -7,7 +7,7 @@ import { Slide, toast, ToastContainer } from "react-toastify";
 const EditUser = () => {
   const { userid } = useParams<{ userid: string }>();
   const navigate = useNavigate();
-  const [id, setId] = useState<number>();
+  const [id, setId] = useState<number | undefined>(undefined);
   const [name, setName] = useState<string>("");
   const [surname, setSurname] = useState<string>("");
   const [phoneNumber, setPhoneNumber] = useState<string>("");
@@ -18,12 +18,12 @@ const EditUser = () => {
     try {
       const response = await axios.get(`http://localhost:5075/api/users/${userid}` );
       const data = await response.data;
-      setId(data.id);
-      setName(data.name);
-      setSurname(data.surname);
-      setPhoneNumber(data.phoneNumber);
-      setEmail(data.email);
-      setIsAdmin(data.isAdmin);
+      setId(data.id || 0); // Fallback to 0 if undefined
+      setName(data.name || ""); // Fallback to empty string
+      setSurname(data.surname || "");
+      setPhoneNumber(data.phoneNumber || "");
+      setEmail(data.email || "");
+      setIsAdmin(data.isAdmin || false); // Fallback to false
     } catch (error) {
       console.error(error);
     }
@@ -73,7 +73,7 @@ const EditUser = () => {
                       <div className={styles.form_group}>
                         <label className="mb-2 fw-semibold">ID</label>
                         <input
-                          value={id}
+                          value={id ?? ""}
                           disabled
                           className="form-control"
                         ></input>

@@ -12,7 +12,7 @@ import { Slide, toast, ToastContainer } from "react-toastify";
 
 const EditProperty = () => {
   const {propertyid} = useParams();
-  const [id, setId] = useState<number>();
+  const [id, setId] = useState<number | undefined>(undefined);
   const [title, setTitle] = useState<string>("");
   const [type, setType] = useState<string>("");
   const [description, setDescription] = useState<string>("");
@@ -43,18 +43,18 @@ const EditProperty = () => {
     try {
       const response = await axios.get(`http://localhost:5075/api/properties/${propertyid}`);
       const data = await response.data;
-      setId(data.id);
-      setTitle(data.title);
-      setType(data.type);
-      setDescription(data.description);
-      setPrice(data.price);
-      setBedroom(data.bedroom);
-      setBathroom(data.bathroom);
-      setArea(data.area);
-      setAddress(data.address);
-      setCity(data.city);
-      setImages(data.images);
-      setAgentId(data.agentId);
+      setId(data.id || 0);
+      setTitle(data.title || "");
+      setType(data.type  || "");
+      setDescription(data.description || "");
+      setPrice(data.price || 0);
+      setBedroom(data.bedroom || 0);
+      setBathroom(data.bathroom || 0);
+      setArea(data.area || 0);
+      setAddress(data.address || "");
+      setCity(data.city || "");
+      setImages(data.images || []);
+      setAgentId(data.agentId || 0);
     } catch (error) {
       console.error(error);
     }

@@ -1,11 +1,6 @@
-import { Route, Routes } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
-import UsersTable from "../../../pages/user/admin/UsersTable"
-import AgentsTable from "../../../pages/agent/admin/AgentsTable"
-import PropertiesTable from "../../../pages/property/admin/PropertiesTable"
-import BookingsTable from "../../../pages/booking/admin/BookingsTable"
-import ContactUsTable from "../../../pages/contact/ContactUsTable"
-import DashboardLayout from "./DashboardLayout"
+
 
 
 const AdminDashboard = () => {
@@ -17,14 +12,7 @@ const AdminDashboard = () => {
               <Sidebar/>
             </div>
             <div className="col py-3 overflow-auto">
-                <Routes>
-                <Route path='dashboard' element={<DashboardLayout/>}/>
-                <Route path='users' element={<UsersTable/>}/>
-                <Route path='agents' element={<AgentsTable/>}/>
-                <Route path='properties' element={<PropertiesTable/>}/>
-                <Route path='bookings' element={<BookingsTable/>}/>
-                <Route path='contactus' element={<ContactUsTable/>}/>
-                </Routes>
+                <Outlet/>
             </div>
         </div>
     </div>     

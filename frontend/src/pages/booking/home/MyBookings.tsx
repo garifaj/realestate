@@ -45,7 +45,7 @@ const MyBookings = () => {
                         src={`http://localhost:5075/Photos/${booking.property?.images?.[0]}`}
                         className="img-fluid rounded-4 mb-3 mb-md-0"
                         alt="Property Image"
-                        style={{ maxWidth: "100px;", maxHeight: "100px", objectFit: "cover" }}
+                        style={{ maxWidth: "100px", maxHeight: "100px", objectFit: "cover" }}
                     />
                     <div className="ms-md-3 flex-grow-1 text-center text-md-start">
                         <h5 className="card-title">{booking.property.title}</h5>

@@ -16,7 +16,7 @@ const UsersTable = () => {
   const navigate = useNavigate();
 
   const loadEdit = (id:number) => {
-    navigate("/users/edit/" + id);
+    navigate("edit/" + id);
   };
 
   const deleteFunction = (id: number) => {
@@ -80,7 +80,7 @@ const UsersTable = () => {
         </div>
         <div className="card-body">
           <div className={styles.divbtn}>
-            <Link to="/users/create" id="#createbutton" className="btn btn-success">
+            <Link to="create" id="#createbutton" className="btn btn-success">
               Add New +
             </Link>
           </div>

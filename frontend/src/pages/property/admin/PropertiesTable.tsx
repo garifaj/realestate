@@ -24,7 +24,7 @@ const PropertiesTable = () => {
   const navigate = useNavigate();
 
   const loadEdit = (id: number) => {
-    navigate("/properties/edit/" + id);
+    navigate("edit/" + id);
   };
 
   const deleteFunction = (id: number) => {
@@ -109,7 +109,7 @@ const PropertiesTable = () => {
         </div>
         <div className="card-body">
           <div className={styles.divbtn}>
-            <Link to="/properties/create" id="#createbutton" className="btn btn-success">
+            <Link to="create" id="#createbutton" className="btn btn-success">
               Add New +
             </Link>
           </div>
