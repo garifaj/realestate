@@ -65,6 +65,13 @@ const EditProperty = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleSetMainImage = (index: number) => {
+    const updatedImages = [...images];
+    const [selectedImage] = updatedImages.splice(index, 1); // Remove the selected image
+    updatedImages.unshift(selectedImage); // Insert the selected image at the beginning
+    setImages(updatedImages); // Update the state with the new image array
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const propertyData = {
@@ -158,7 +165,7 @@ const EditProperty = () => {
                 className="form-control"
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-8">
               <label className="form-label">Title:</label>
               <input
                 type="text"
@@ -170,7 +177,7 @@ const EditProperty = () => {
               />
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-4">
               <label className="form-label">Type:</label>
               <select
                 id="type"
@@ -307,7 +314,10 @@ const EditProperty = () => {
               {error && <small className="text-danger">{error}</small>}
             </div>
             <div className="col-12 pe-3">
-              <PropertyImageGallery images={images} />
+              <PropertyImageGallery
+                images={images}
+                handleSetMainImage={handleSetMainImage}
+              />
             </div>
           </div>
 
