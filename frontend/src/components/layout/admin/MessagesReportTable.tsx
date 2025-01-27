@@ -53,7 +53,7 @@ const MessagesReportTable = () => {
                             {message.email}
                         </td>
                         <td style={{maxWidth: "12rem"}}> {message.subject}</td>
-                        <td style={{maxWidth: "17rem"}}>
+                        <td style={{maxWidth: "12rem"}}>
                             <div style={{maxWidth: "100%",
                             wordWrap: "break-word",
                             overflowWrap: "break-word",

@@ -19,7 +19,7 @@ const Sidebar = () => {
     <>
      <div className="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                 <a href="/" className="d-flex align-items-center pt-3 pb-4 mx-auto mb-md-0 me-md-auto text-white text-decoration-none">
-                    <span className="fs-4 fw-bold d-none d-sm-inline text-body-emphasis ">STATED.</span>
+                    <span className="fs-4 fw-bold d-none d-sm-inline text-body-emphasis " id={styles.title}>Stated</span>
                 </a>
                 <ul className="nav nav-pills flex-column gap-2 mb-sm-auto mb-0 align-items-start align-items-sm-start w-100" id="menu">
                     <li className="w-100">

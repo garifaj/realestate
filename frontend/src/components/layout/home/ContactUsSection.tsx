@@ -43,7 +43,7 @@ const ContactUsSection = () => {
     }
 
   return (
-    <section className={`${styles.contactUsSection} py-5`}>
+    <section className={`${styles.contactUsSection} py-5`} id="contactSection">
         <ToastContainer
         position="top-center"
         autoClose={1000}

@@ -20,7 +20,7 @@ const AgentsTable = () => {
   const navigate = useNavigate();
 
   const loadEdit = (id: number) => {
-    navigate("/agents/edit/" + id);
+    navigate("edit/" + id);
   };
 
   const deleteFunction = (id: number) => {
@@ -95,7 +95,7 @@ const AgentsTable = () => {
         </div>
         <div className="card-body">
           <div className={styles.divbtn}>
-            <Link to="/agents/create" id="#createbutton" className="btn btn-success">
+            <Link to="create" id="#createbutton" className="btn btn-success">
               Add New +
             </Link>
           </div>

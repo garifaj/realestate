@@ -49,7 +49,7 @@ const Signup = () => {
       <div className="container">
         <div className="d-flex mx-auto justify-content-center align-items-center vh-100">
           <div className="card p-4 mx-auto border-0 rounded-4 shadow" id={styles.signupCard}>
-            <h3 className="text-center mb-4 mt-2 fw-bold">STATED.</h3>
+            <h3 className="text-center mb-4 mt-2 fw-bold" id={styles.title}>Stated</h3>
             <form className={`needs-validation ${showValidation ? 'was-validated' : ''}`} onSubmit={handleRegisterSubmit} noValidate>
                   <div className="form-group mb-3">
                      <label htmlFor="name" className="mb-2 fw-semibold">Name</label>

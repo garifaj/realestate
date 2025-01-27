@@ -1,8 +1,10 @@
 .title {
   color: var(--primary-color);
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 700;
   margin-bottom: 1.5rem;
+  font-family: "thermal-variable", sans-serif !important;
+  font-variation-settings: "wght" 700,   "opsz"  500;
 }
 
 .subtitle {

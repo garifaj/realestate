@@ -14,19 +14,25 @@ const Navbar = () => {
     navigate('/');// Redirect to homepage after logging out
     setUser(null); // Clear user data from context
   };
-
-  const handleAgentLinkClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault(); 
+  const handleSectionLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    sectionId: string
+  ) => {
+    e.preventDefault();
     if (location.pathname !== "/") {
       navigate("/"); // Redirect to the homepage
     }
     setTimeout(() => {
-      const agentSection = document.getElementById("agentSection");
-      if (agentSection) {
-        agentSection.scrollIntoView({ behavior: "smooth" });
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = section.offsetTop - 100; // Adjust for 10px above
+        window.scrollTo({ top: offset, behavior: "smooth" });
       }
-    }, 100); // Slight delay to ensure DOM rendering
+    }, 50); // Slight delay to ensure DOM rendering
   };
+
+
+
   const handleLinkClick = () => {
     // Close the offcanvas manually using Bootstrap's method
     const offcanvasElement = document.querySelector('#offcanvasNavbar');
@@ -46,7 +52,7 @@ const Navbar = () => {
     <header className={styles.header}>
         <nav className="navbar navbar-expand-lg">
           <div className="container">
-            <Link to={"/"} className={`nav-link ${styles.navBrand}`}>STATED.</Link>
+            <Link to={"/"} className={`nav-link ${styles.navBrand}`}>Stated</Link>
             <button
               className="navbar-toggler"
               type="button"
@@ -77,14 +83,14 @@ const Navbar = () => {
                   <Link
                     className={`nav-link px-2 ${styles.navLink}`}
                     to="#"
-                    onClick={handleAgentLinkClick}
+                    onClick={(e) => handleSectionLinkClick(e, "agentSection")}
                     data-bs-dismiss="offcanvas"
                   >
                     Agents
                   </Link>
                   </li>
                   <li className="nav-item px-3 ">
-                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#" onClick={() => handleLinkClick()}>Contact</Link>
+                    <Link className={`nav-link px-2 ${styles.navLink}`} to="#" onClick={(e) => handleSectionLinkClick(e, "contactSection")} data-bs-dismiss="offcanvas">Contact</Link>
                   </li>
                   {/* Profile Dropdown */}
                   <li className="nav-item dropdown px-3">

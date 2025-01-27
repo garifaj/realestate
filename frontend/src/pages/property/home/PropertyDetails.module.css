@@ -14,3 +14,8 @@
 .imagesSection img:hover {
   cursor: pointer;
 }
+.title {
+  font-family: "thermal-variable", sans-serif !important;
+  font-variation-settings: "wght" 700,   "opsz"  500;
+  font-weight: 500;
+}

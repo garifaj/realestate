@@ -100,7 +100,7 @@ const BookingForm: React.FC = () => {
       transition={Slide}
       />
     <div className="card shadow py-4 px-4 mt-5 mb-5 rounded-5 ">
-      <h4 className="text-center mb-3">Request a tour</h4>
+      <h4 className="text-center mb-3" style={{ fontFamily: "thermal-variable, sans-serif", fontVariationSettings: '"wght" 700, "opsz" 500' }}>Request a tour</h4>
       <form onSubmit={handleSubmit}>
         <div className="d-flex justify-content-between mb-3">
           <div className="d-flex flex-column me-2 w-50">

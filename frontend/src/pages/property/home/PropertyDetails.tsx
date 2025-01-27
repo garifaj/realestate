@@ -32,7 +32,7 @@ const PropertyDetails = () => {
       <Navbar />
       <div className="container">
         <div className="title py-4">
-          <h3>{property?.title}</h3>
+          <h3 className={styles.title}>{property?.title}</h3>
         </div>
 
         {/* Images Section */}

@@ -54,7 +54,7 @@ const Login = () => {
       <div className="container">
         <div className="d-flex mx-auto justify-content-center align-items-center vh-100">
         <div className="card p-4 mx-auto border-0 rounded-4 shadow" id={styles.loginCard}>
-          <h3 className="text-center my-4 fw-bold">STATED.</h3>
+          <h3 className="text-center my-4 fw-bold" id={styles.title}>Stated</h3>
         {errorMessage && <div className="text-danger mb-2 text-center ">{errorMessage}</div>}
              <form className={`needs-validation ${showValidation ? 'was-validated' : ''}`} onSubmit={handleLoginSubmit} noValidate>
                <div className="form-group mb-3">

@@ -32,7 +32,7 @@ const DashboardCards = () => {
   return (
     
     <>
-        <h3 className="py-2">Dashboard</h3>
+        <h3 className={`${styles.title} py-2`}>Dashboard</h3>
         <div className="row">
             <div className="col-lg-3 col-md-6 col-sm-6 py-2">
                 <div className="card rounded-4 border-0 py-1" id={styles.cardShadow} >

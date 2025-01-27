@@ -37,7 +37,7 @@ const BookingsReportSection = () => {
       <div className="row flex-wrap py-3">
         <div className="col-lg-8 py-2">
           <div className="card border-0 p-4 mt-4 bg-white rounded-4 h-100" id={styles.cardShadow}>
-            <h5 className="pt-2 pb-3">Recent bookings</h5>
+            <h5 className={`pt-2 pb-3 ${styles.title}`}>Recent bookings</h5>
             <BookingsReportTable />
             <NavLink to={"/admin/bookings"} className="text-center text-decoration-none pb-2">
               View all bookings
@@ -46,7 +46,7 @@ const BookingsReportSection = () => {
         </div>
         <div className="col-lg-4 py-2">
           <div className="card border-0 p-4 mt-4 bg-white rounded-4 h-100" id={styles.cardShadow}>
-            <h5 className="pt-2 pb-3">Analytics</h5>
+            <h5 className={`pt-2 pb-3 ${styles.title}`}>Analytics</h5>
             <h6 className="text-muted text-center">Bookings Status Overview</h6>
             <VictoryPie
               height={350}

@@ -5,13 +5,18 @@ body {
 .title {
   color: #f69314;
   font-size: 40px;
-  font-weight: 900;
+  font-weight: 700;
+  font-family: "thermal-variable", sans-serif !important;
+  font-variation-settings: "wght" 700,   "opsz"  500;
 }
 
 .cardtitle {
   font-size: 1.3rem;
   margin-bottom: 1rem;
   color: #343a40 !important;
+  font-family: "thermal-variable", sans-serif !important;
+  font-variation-settings: "wght" 700,   "opsz"  500;
+  font-weight: 700;
 }
 
 .cardparagraph {
