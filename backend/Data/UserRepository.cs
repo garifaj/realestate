@@ -23,5 +23,18 @@ namespace backend.Data
         {
             return _context.Users.FirstOrDefault(u => u.Id == id);
         }
+
+        public User GetByResetToken(string token)
+        {
+            return _context.Users
+                .FirstOrDefault(u => u.ResetToken == token);
+        }
+
+        public User Update(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+            return user;
+        }
     }
 }

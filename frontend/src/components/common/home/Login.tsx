@@ -67,9 +67,10 @@ const Login = () => {
             className="card p-4 mx-auto border-0 rounded-4 shadow"
             id={styles.loginCard}
           >
-            <h3 className="text-center my-4 fw-bold" id={styles.title}>
-              Stated
-            </h3>
+            <Link to="/" className="text-decoration-none" id={styles.title}>
+              <h3 className="text-center my-4 fw-bold">Stated</h3>
+            </Link>
+
             {errorMessage && (
               <div className="text-danger mb-2 text-center ">
                 {errorMessage}
@@ -123,6 +124,11 @@ const Login = () => {
                   />
                 </div>
                 <div className="invalid-feedback">Password is required.</div>
+                <div className="text-end mt-2">
+                  <Link to="/forgot-password" className="text-decoration-none">
+                    <p>Forgot Password?</p>
+                  </Link>
+                </div>
               </div>
               <div className="d-grid mb-2">
                 <button

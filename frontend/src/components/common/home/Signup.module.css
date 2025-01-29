@@ -23,4 +23,9 @@
   font-weight: 900;
   font-family: "thermal-variable", sans-serif !important;
   font-variation-settings: "wght" 700,   "opsz"  500;
+  color: black;
+}
+
+#title:hover {
+  color: var(--primary-color);
 }

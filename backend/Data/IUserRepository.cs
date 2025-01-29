@@ -7,5 +7,7 @@ namespace backend.Data
         User Create(User user);
         User GetByEmail(string email);
         User GetById(int id);
+        User GetByResetToken(string token);
+        User Update(User user);
     }
 }

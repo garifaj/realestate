@@ -3,6 +3,7 @@ using backend.DTOs;
 using backend.Helpers;
 using backend.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography;
 
 namespace backend.Controllers
 {
@@ -12,11 +13,13 @@ namespace backend.Controllers
     {
         private readonly IUserRepository _repository;
         private readonly JwtService _jwtService;
+        private readonly EmailService _emailService;
 
-        public AuthController(IUserRepository repository, JwtService jwtService)
+        public AuthController(IUserRepository repository, JwtService jwtService, EmailService emailService)
         {
             _repository = repository;
             _jwtService = jwtService;
+            _emailService = emailService;
         }
 
         [HttpPost("register")]
@@ -102,5 +105,43 @@ namespace backend.Controllers
                 message = "success"
             });
         }
+
+        [HttpPost("forgot-password")]
+        public IActionResult ForgotPassword(ForgotPasswordDto dto)
+        {
+            var user = _repository.GetByEmail(dto.Email);
+
+            if (user == null) return BadRequest( new { message = "User not found!" }); // Don't reveal user existence
+
+            // Generate reset token (valid for 1 hour)
+            var resetToken = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
+            user.ResetToken = resetToken; // Store without encoding
+            user.ResetTokenExpiry = DateTime.UtcNow.AddHours(1);
+
+            _repository.Update(user);
+
+            _emailService.SendPasswordResetEmail(user.Email, resetToken);
+
+            return Ok(new { message = "Password reset email sent" });
+        }
+
+        [HttpPost("reset-password")]
+        public IActionResult ResetPassword(ResetPasswordDto dto)
+        {
+            var user = _repository.GetByResetToken(dto.Token); // Use token directly
+
+            if (user == null || user.ResetTokenExpiry < DateTime.UtcNow)
+                return BadRequest(new { message = "Invalid or expired token" });
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            user.ResetToken = null;
+            user.ResetTokenExpiry = null;
+
+            _repository.Update(user);
+
+            return Ok(new { message = "Password reset successful" });
+        }
+
+
     }
 }

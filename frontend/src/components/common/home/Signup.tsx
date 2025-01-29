@@ -61,9 +61,9 @@ const Signup = () => {
             className="card p-4 mx-auto border-0 rounded-4 shadow"
             id={styles.signupCard}
           >
-            <h3 className="text-center mb-4 mt-2 fw-bold" id={styles.title}>
-              Stated
-            </h3>
+            <Link to="/" className="text-decoration-none" id={styles.title}>
+              <h3 className="text-center my-4 fw-bold">Stated</h3>
+            </Link>
             <form
               className={`needs-validation ${
                 showValidation ? "was-validated" : ""
