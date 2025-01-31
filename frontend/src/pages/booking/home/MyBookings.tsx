@@ -4,6 +4,7 @@ import { Booking } from "../../../context/types";
 import styles from "./MyBookings.module.css";
 import axios from "axios";
 import { UserContext } from "../../../context/UserContext";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const MyBookings = () => {
     const [bookings, setBookings] = useState<Booking[]>([]);
@@ -13,7 +14,7 @@ const MyBookings = () => {
     useEffect(() => {
         async function fetchBookings() {
             try {
-                const response = await axios.get("http://localhost:5075/api/bookings");
+                const response = await axios.get(`${API_BASE_URL}/bookings`);
                 const userBookings = response.data.filter((booking: Booking) => booking.userId === user?.id);
                 setBookings(userBookings);
             } catch (error) {

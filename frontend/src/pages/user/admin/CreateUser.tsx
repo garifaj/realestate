@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./CreateUser.module.css";
 import axios from "axios";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const CreateUser = () => {
   const [name, setName] = useState<string>("");
@@ -17,9 +17,10 @@ const CreateUser = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userData = {name, surname, phoneNumber, email, isAdmin, password };
+    const userData = { name, surname, phoneNumber, email, isAdmin, password };
 
-    axios.post("http://localhost:5075/api/users", userData)
+    axios
+      .post(`${API_BASE_URL}/users`, userData)
       .then(() => {
         toast.success("User created successfully!", {
           onClose: () => navigate("/admin/users"),
@@ -33,13 +34,13 @@ const CreateUser = () => {
 
   return (
     <>
-    <ToastContainer
-      position="top-center"
-      autoClose={800}
-      hideProgressBar={false}
-      pauseOnHover={false}
-      theme="light"
-      transition={Slide}
+      <ToastContainer
+        position="top-center"
+        autoClose={800}
+        hideProgressBar={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
       />
       <div className={styles.container_room}>
         <div className="row">
@@ -84,7 +85,7 @@ const CreateUser = () => {
                         <label className="mb-2 fw-semibold">Phone number</label>
                         <input
                           type="tel"
-                          pattern="\+?[0-9\s\-\(\)]+" 
+                          pattern="\+?[0-9\s\-\(\)]+"
                           placeholder="+1 234-567-8901"
                           value={phoneNumber}
                           onChange={(e) => setPhoneNumber(e.target.value)}
@@ -93,8 +94,6 @@ const CreateUser = () => {
                         ></input>
                       </div>
                     </div>
-
-                    
 
                     <div className="col-lg-12">
                       <div className={styles.form_group}>
@@ -135,7 +134,9 @@ const CreateUser = () => {
                           checked={isAdmin}
                           onChange={(e) => setIsAdmin(e.target.checked)}
                         ></input>
-                        <label className="form-check-label fw-semibold">Admin</label>
+                        <label className="form-check-label fw-semibold">
+                          Admin
+                        </label>
                       </div>
                     </div>
                     <div className="col-lg-12">

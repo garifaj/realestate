@@ -3,14 +3,14 @@ import styles from "./PropertyDetails.module.css";
 import { Property } from "../../../context/types";
 
 type PropertyImgCardsProps = {
-  property: Property | null; 
-}
+  property: Property | null;
+};
 
-const PropertyImgCards = ({property}: PropertyImgCardsProps) => {
+const PropertyImgCards = ({ property }: PropertyImgCardsProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const openModal = (index:number) => {
+  const openModal = (index: number) => {
     setActiveIndex(index);
     setModalOpen(true);
   };
@@ -33,7 +33,10 @@ const PropertyImgCards = ({property}: PropertyImgCardsProps) => {
               />
             )}
           </div>
-          <div className="col-lg-3 d-flex flex-column" style={{ height: "100%" }}>
+          <div
+            className="col-lg-3 d-flex flex-column"
+            style={{ height: "100%" }}
+          >
             <div className="flex-grow-1 h-50">
               {property?.images?.[1] && (
                 <img
@@ -116,9 +119,38 @@ const PropertyImgCards = ({property}: PropertyImgCardsProps) => {
                 transform: "translateY(-50%)",
                 zIndex: 1051,
               }}
-              onClick={() => property?.images && setActiveIndex((prev) => (prev - 1 + property.images.length) % property.images.length)}
+              onClick={() =>
+                property?.images &&
+                setActiveIndex(
+                  (prev) =>
+                    (prev - 1 + property.images.length) % property.images.length
+                )
+              }
             >
-              <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="#ffffff"></path> </g></svg>
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#ffffff"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"
+                    fill="#ffffff"
+                  ></path>{" "}
+                </g>
+              </svg>
             </button>
             <button
               className="btn rounded-5 p-2"
@@ -129,25 +161,73 @@ const PropertyImgCards = ({property}: PropertyImgCardsProps) => {
                 transform: "translateY(-50%)",
                 zIndex: 1051,
               }}
-              onClick={() =>property?.images && setActiveIndex((prev) => (prev + 1) % property.images.length)}
+              onClick={() =>
+                property?.images &&
+                setActiveIndex((prev) => (prev + 1) % property.images.length)
+              }
             >
-              <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z" fill="#ffffff"></path> </g></svg>
+              <svg
+                width="30px"
+                height="30px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#ffffff"
+                transform="rotate(180)"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  {" "}
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M15.7071 4.29289C16.0976 4.68342 16.0976 5.31658 15.7071 5.70711L9.41421 12L15.7071 18.2929C16.0976 18.6834 16.0976 19.3166 15.7071 19.7071C15.3166 20.0976 14.6834 20.0976 14.2929 19.7071L7.29289 12.7071C7.10536 12.5196 7 12.2652 7 12C7 11.7348 7.10536 11.4804 7.29289 11.2929L14.2929 4.29289C14.6834 3.90237 15.3166 3.90237 15.7071 4.29289Z"
+                    fill="#ffffff"
+                  ></path>{" "}
+                </g>
+              </svg>
             </button>
-            
           </div>
           <button
-              className="btn"
-              style={{
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                zIndex: 1051,
-                color:"#fff"
-              }}
-              onClick={closeModal}
+            className="btn"
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              zIndex: 1051,
+              color: "#fff",
+            }}
+            onClick={closeModal}
+          >
+            <svg
+              width="22px"
+              height="22px"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              stroke="#ffffff"
             >
-             <svg width="22px" height="22px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path fill-rule="evenodd" clip-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="#ffffff"></path></g></svg> 
-            </button>
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g
+                id="SVGRepo_tracerCarrier"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z"
+                  fill="#ffffff"
+                ></path>
+              </g>
+            </svg>
+          </button>
         </div>
       )}
     </>

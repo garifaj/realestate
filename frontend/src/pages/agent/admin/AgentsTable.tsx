@@ -7,14 +7,15 @@ import TablePagination from "../../../components/common/admin/TablePagination";
 import AgentsPropertiesModal from "./AgentsPropertiesModal";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import { PulseLoader } from "react-spinners";
-
+import { DeleteIcon, EditIcon } from "../../../constants/icons";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const AgentsTable = () => {
   const [agents, setAgents] = useState<Agent[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
   const [showPropertyModal, setShowPropertyModal] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<Agent|null>(null);
+  const [selectedAgent, setSelectedAgent] = useState<Agent | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const agentsPerPage = 3;
   const navigate = useNavigate();
@@ -26,10 +27,12 @@ const AgentsTable = () => {
   const deleteFunction = (id: number) => {
     if (window.confirm("Are you sure you want to delete this agent?")) {
       axios
-        .delete(`http://localhost:5075/api/agents/${id}`)
+        .delete(`${API_BASE_URL}/agents/${id}`)
         .then(() => {
           toast.info("Agent deleted successfully!");
-          setAgents((prevAgents) => prevAgents.filter((agent) => agent.id !== id));
+          setAgents((prevAgents) =>
+            prevAgents.filter((agent) => agent.id !== id)
+          );
         })
         .catch((err) => {
           console.log(err.message);
@@ -41,7 +44,7 @@ const AgentsTable = () => {
   useEffect(() => {
     const fetchAgents = async () => {
       try {
-        const response = await axios.get("http://localhost:5075/api/agents");
+        const response = await axios.get(`${API_BASE_URL}/agents`);
         setAgents(response.data);
       } catch (error) {
         console.error(error);
@@ -62,8 +65,7 @@ const AgentsTable = () => {
   const indexOfLastAgent = currentPage * agentsPerPage;
   const indexOfFirstAgent = indexOfLastAgent - agentsPerPage;
   const currentAgents =
-    filteredAgents &&
-    filteredAgents.slice(indexOfFirstAgent, indexOfLastAgent);
+    filteredAgents && filteredAgents.slice(indexOfFirstAgent, indexOfLastAgent);
 
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
@@ -72,22 +74,21 @@ const AgentsTable = () => {
   const handleOpenPropertyModal = (agent: Agent) => {
     setShowPropertyModal(true);
     setSelectedAgent(agent);
-
-  }
+  };
   const handleClosePropertyModal = () => {
     setShowPropertyModal(false);
     setSelectedAgent(null);
-  }
+  };
 
   return (
     <div className="container py-5">
       <ToastContainer
-      position="top-center"
-      autoClose={1500}
-      hideProgressBar={false}
-      pauseOnHover={false}
-      theme="light"
-      transition={Slide}
+        position="top-center"
+        autoClose={1500}
+        hideProgressBar={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
       />
       <div className="card" id={styles.card}>
         <div className="card-title">
@@ -113,151 +114,119 @@ const AgentsTable = () => {
           <div className="table-responsive">
             {loading ? (
               <div style={{ textAlign: "center", margin: "20px 0" }}>
-              <PulseLoader color="#000000" size={20}  />
+                <PulseLoader color="#000000" size={20} />
               </div>
             ) : (
-              <table className="table table-bordered" style={{ minWidth: "850px" ,maxWidth:"100%"}}>
-              <thead className="bg-dark text-white">
-                <tr id={styles.headerRow}>
-                  <td>ID</td>
-                  <td>Full Name</td>
-                  <td>Phone Number</td>
-                  <td>Email</td>
-                  <td>Bio</td>
-                  <td>LinkedIn</td>
-                  <td>Properties</td>
-                  <td>Actions</td>
-                </tr>
-              </thead>
-              <tbody>
-                {currentAgents.length === 0 ? (
-                  <tr>
-                    <td
-                      colSpan={9}
-                      style={{ textAlign: "center", fontSize: "25px" }}
-                    >
-                      No agents found!
-                    </td>
+              <table
+                className="table table-bordered"
+                style={{ minWidth: "850px", maxWidth: "100%" }}
+              >
+                <thead className="bg-dark text-white">
+                  <tr id={styles.headerRow}>
+                    <td>ID</td>
+                    <td>Full Name</td>
+                    <td>Phone Number</td>
+                    <td>Email</td>
+                    <td>Bio</td>
+                    <td>LinkedIn</td>
+                    <td>Properties</td>
+                    <td>Actions</td>
                   </tr>
-                ) : (
-                  currentAgents.map((agent) => (
-                    <tr key={agent.id}>
-                      <td>{agent.id}</td>
-                      <td>
-                        {agent.name} {agent.surname}
+                </thead>
+                <tbody>
+                  {currentAgents.length === 0 ? (
+                    <tr>
+                      <td
+                        colSpan={9}
+                        style={{ textAlign: "center", fontSize: "25px" }}
+                      >
+                        No agents found!
                       </td>
-                      <td>{agent.phoneNumber}</td>
-                      <td>{agent.email}</td>
-                      <td>
-                        <div className={styles.customCell} dangerouslySetInnerHTML={{__html:agent.bio}}>
-                          
-                          </div>
-                      </td>
-                      <td 
-                      style={{
+                    </tr>
+                  ) : (
+                    currentAgents.map((agent) => (
+                      <tr key={agent.id}>
+                        <td>{agent.id}</td>
+                        <td>
+                          {agent.name} {agent.surname}
+                        </td>
+                        <td>{agent.phoneNumber}</td>
+                        <td>{agent.email}</td>
+                        <td>
+                          <div
+                            className={styles.customCell}
+                            dangerouslySetInnerHTML={{ __html: agent.bio }}
+                          ></div>
+                        </td>
+                        <td
+                          style={{
                             maxWidth: "20rem",
                             maxHeight: "5rem",
                             overflow: "auto",
-                      }}>{agent.linkedIn}</td>
-                      <td>
-                        {agent.properties && agent.properties.length > 0 ? (
-                          <a
-                            href="#"
-                            className="link-primary"
-                            onClick={(e) => {
-                              e.preventDefault(); // Prevent page reload
-                              handleOpenPropertyModal(agent);
-                            }}
-                          >
-                            View Properties
-                          </a>
-                        ) : (
-                          <span>No properties</span>
-                        )}
-                      </td>
-                      <td>
-                        <div
-                          className="d-flex justify-content-center align-items-center"
-                          style={{ gap: "10px" }} // Adjust spacing between icons as needed
+                          }}
                         >
-                          <a
-                            onClick={() => {
-                              loadEdit(agent.id);
-                            }}
-                          >
-                            <svg
-                              viewBox="0 0 24 24"
-                              style={{ width: "18px", height: "20px" }}
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                          {agent.linkedIn}
+                        </td>
+                        <td>
+                          {agent.properties && agent.properties.length > 0 ? (
+                            <a
+                              href="#"
+                              className="link-primary"
+                              onClick={(e) => {
+                                e.preventDefault(); // Prevent page reload
+                                handleOpenPropertyModal(agent);
+                              }}
                             >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                              <g id="SVGRepo_iconCarrier">
-                                <path
-                                  d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z"
-                                  stroke="#008000"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                ></path>
-                                <path
-                                  d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13"
-                                  stroke="#008000"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                ></path>
-                              </g>
-                            </svg>
-                          </a>
-                          <a
-                            onClick={() => {
-                              deleteFunction(agent.id);
-                            }}
+                              View Properties
+                            </a>
+                          ) : (
+                            <span>No properties</span>
+                          )}
+                        </td>
+                        <td>
+                          <div
+                            className="d-flex justify-content-center align-items-center"
+                            style={{ gap: "10px" }} // Adjust spacing between icons as needed
                           >
-                            <svg
-                              viewBox="0 0 24 24"
-                              style={{ width: "20px", height: "20px" }}
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                            <a
+                              onClick={() => {
+                                loadEdit(agent.id);
+                              }}
                             >
-                              <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                              <g id="SVGRepo_iconCarrier">
-                                <path
-                                  d="M6 7V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V7M6 7H5M6 7H8M18 7H19M18 7H16M10 11V16M14 11V16M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7M8 7H16"
-                                  stroke="#FF0000"
-                                  strokeWidth="2"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                ></path>
-                              </g>
-                            </svg>
-                          </a>
-                        </div>
-                      </td>
-
-                    </tr>
-                  ))
-                )}
-              </tbody>
-              <tfoot>
-                <TablePagination
-                  totalItems={filteredAgents.length}
-                  itemsPerPage={agentsPerPage}
-                  currentPage={currentPage}
-                  paginate={paginate}
-                  colSpan={8} // table column count
-                />
-              </tfoot>
-            </table>
+                              <EditIcon />
+                            </a>
+                            <a
+                              onClick={() => {
+                                deleteFunction(agent.id);
+                              }}
+                            >
+                              <DeleteIcon />
+                            </a>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+                <tfoot>
+                  <TablePagination
+                    totalItems={filteredAgents.length}
+                    itemsPerPage={agentsPerPage}
+                    currentPage={currentPage}
+                    paginate={paginate}
+                    colSpan={8} // table column count
+                  />
+                </tfoot>
+              </table>
             )}
-           
           </div>
         </div>
       </div>
-      <AgentsPropertiesModal show = {showPropertyModal} handleClose ={handleClosePropertyModal} agent={selectedAgent}/>
+      <AgentsPropertiesModal
+        show={showPropertyModal}
+        handleClose={handleClosePropertyModal}
+        agent={selectedAgent}
+      />
     </div>
   );
 };

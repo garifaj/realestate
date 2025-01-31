@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../utils/config";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5075/api/forgot-password", { email });
+      await axios.post(`${API_BASE_URL}/forgot-password`, { email });
       toast.success("Reset link sent to your email", {
         onClose: () => navigate("/login"),
       });

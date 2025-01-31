@@ -4,6 +4,7 @@ import styles from "./EditAgent.module.css";
 import axios from "axios";
 import TextEditor from "../../../components/common/admin/TextEditor";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const EditAgent = () => {
   const { agentid } = useParams();
@@ -20,9 +21,7 @@ const EditAgent = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:5075/api/agents/${agentid}`
-      );
+      const response = await axios.get(`${API_BASE_URL}/agents/${agentid}`);
       const data = await response.data;
       setId(data.id || 0);
       setName(data.name || "");
@@ -55,7 +54,7 @@ const EditAgent = () => {
       profilePicture,
     };
     axios
-      .put(`http://localhost:5075/api/agents/${agentid}`, agentData)
+      .put(`${API_BASE_URL}/agents/${agentid}`, agentData)
       .then(() => {
         toast.success("Agent updated successfully!", {
           onClose: () => navigate("/admin/agents"),
@@ -75,7 +74,7 @@ const EditAgent = () => {
       formData.append("file", e.target.files[0], e.target.files[0].name);
 
       axios
-        .post("http://localhost:5075/api/agents/savefile", formData)
+        .post(`${API_BASE_URL}/agents/savefile`, formData)
         .then((response) => {
           setProfilePicture(response.data);
         })

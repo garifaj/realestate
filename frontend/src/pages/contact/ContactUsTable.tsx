@@ -3,6 +3,7 @@ import { ContactUs } from "../../context/types";
 import axios from "axios";
 import TablePagination from "../../components/common/admin/TablePagination";
 import styles from "./ContactUsTable.module.css";
+import API_BASE_URL from "../../components/common/utils/config";
 
 const ContactUsTable = () => {
   const [contacts, setContacts] = useState<ContactUs[]>([]);
@@ -12,7 +13,7 @@ const ContactUsTable = () => {
   useEffect(() => {
     async function fetchContacts() {
       try {
-        const response = await axios.get("http://localhost:5075/api/contactus");
+        const response = await axios.get(`${API_BASE_URL}/contactus`);
         setContacts(response.data);
       } catch (error) {
         console.error(error);
@@ -37,11 +38,10 @@ const ContactUsTable = () => {
 
   const handleAnswerChange = async (id: number, isAnswered: boolean) => {
     try {
-      await axios.put(`http://localhost:5075/api/contactus/${id}`, {
+      await axios.put(`${API_BASE_URL}/contactus/${id}`, {
         isAnswered: isAnswered,
       });
 
-      // Update state locally to avoid refetching the entire table
       setContacts((prevContacts) =>
         prevContacts.map((contact) =>
           contact.id === id ? { ...contact, isAnswered } : contact
@@ -49,6 +49,25 @@ const ContactUsTable = () => {
       );
     } catch (error) {
       console.error("Error updating contact:", error);
+    }
+  };
+
+  const handleEmailClick = async (contact: ContactUs) => {
+    const confirmAction = window.confirm(
+      "Mark as answered and open email client?"
+    );
+    if (!confirmAction) return;
+
+    try {
+      await handleAnswerChange(contact.id, true);
+
+      const subject = encodeURIComponent(
+        `Stated response to your message, ${contact.name} ${contact.surname}`
+      );
+      const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${contact.email}&su=${subject}`;
+      window.open(mailtoLink, "_blank");
+    } catch (error) {
+      console.error("Failed to update status:", error);
     }
   };
 
@@ -102,13 +121,11 @@ const ContactUsTable = () => {
                       </td>
                       <td>
                         <a
-                          href={`https://mail.google.com/mail/?view=cm&fs=1&to=${
-                            contact.email
-                          }&su=${encodeURIComponent(
-                            `Stated response to your message, ${contact.name} ${contact.surname}` // Subject
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          href="#"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleEmailClick(contact);
+                          }}
                           className="text-decoration-none"
                         >
                           {contact.email}

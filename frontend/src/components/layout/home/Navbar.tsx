@@ -3,17 +3,14 @@ import styles from "./Header.module.css"; // Import the CSS module
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../../context/UserContext";
+import API_BASE_URL from "../../common/utils/config";
 
 const Navbar = () => {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await axios.post(
-      "http://localhost:5075/api/logout",
-      {},
-      { withCredentials: true }
-    );
+    await axios.post(`${API_BASE_URL}/logout`, {}, { withCredentials: true });
     navigate("/"); // Redirect to homepage after logging out
     setUser(null); // Clear user data from context
   };

@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./Login.module.css";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import HideShowPasswordBtn from "./HideShowPasswordBtn";
+import API_BASE_URL from "../utils/config";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -19,7 +20,7 @@ const ResetPassword = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5075/api/reset-password", {
+      await axios.post(`${API_BASE_URL}/reset-password`, {
         token, // Send the decoded token
         newPassword,
       });

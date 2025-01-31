@@ -24,6 +24,11 @@
   stroke: var(--primary-color);
 }
 
+.icons svg path {
+  fill: #fff;
+  stroke: #fff;
+}
+
 .nav ul li a {
   color: #999;
 }

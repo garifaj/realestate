@@ -3,6 +3,7 @@ import styles from "./Signup.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import HideShowPasswordBtn from "./HideShowPasswordBtn";
+import API_BASE_URL from "../utils/config";
 
 const Signup = () => {
   const [name, setName] = useState<string>("");
@@ -31,7 +32,7 @@ const Signup = () => {
       setShowValidation(true);
     } else {
       try {
-        await axios.post("http://localhost:5075/api/register", {
+        await axios.post(`${API_BASE_URL}/register`, {
           name,
           surname,
           phoneNumber,

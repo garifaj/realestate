@@ -26,11 +26,14 @@ namespace backend.Helpers
             var bodyBuilder = new BodyBuilder
             {
                 HtmlBody = $@"
+                <p>Hi,</p>
                 <p>Click this link to reset your password:</p>
                 <a href='http://localhost:5173/reset-password/{System.Web.HttpUtility.UrlEncode(resetToken)}'>
                     Reset Password
                 </a>
-                <p>This link expires in 1 hour.</p>"
+                <p>This link will expire in 1 hour. If you didn't request a password reset, you can safely ignore this email.</p>
+                <p>Thanks,</p>
+                <p>Stated Real Estate Agency"
             };
 
             message.Body = bodyBuilder.ToMessageBody();

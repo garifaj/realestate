@@ -7,6 +7,7 @@ import { Agent } from "../../../context/types";
 import PropertyImageGallery from "./PropertyImageGallery";
 import TextEditor from "../../../components/common/admin/TextEditor";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const CreateProperty = () => {
   const [title, setTitle] = useState<string>("");
@@ -27,7 +28,7 @@ const CreateProperty = () => {
 
   const fetchAgents = async () => {
     try {
-      const response = await axios.get("http://localhost:5075/api/agents");
+      const response = await axios.get(`${API_BASE_URL}/agents`);
       const agentsData = response.data;
       setAgents(agentsData);
       if (agentsData.length > 0) {
@@ -71,7 +72,7 @@ const CreateProperty = () => {
     }
 
     axios
-      .post("http://localhost:5075/api/properties", propertyData)
+      .post(`${API_BASE_URL}/properties`, propertyData)
       .then(() => {
         toast.success("Property created successfully!", {
           onClose: () => navigate("/admin/properties"),
@@ -107,7 +108,7 @@ const CreateProperty = () => {
       });
 
       axios
-        .post("http://localhost:5075/api/properties/savefile", formData)
+        .post(`${API_BASE_URL}/properties/savefile`, formData)
         .then((response) => {
           setImages(response.data);
         })

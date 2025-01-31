@@ -4,6 +4,7 @@ import { UserContext } from "../../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import HideShowPasswordBtn from "./HideShowPasswordBtn";
+import API_BASE_URL from "../utils/config";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -29,7 +30,7 @@ const Login = () => {
     } else {
       try {
         const { data } = await axios.post(
-          "http://localhost:5075/api/login",
+          `${API_BASE_URL}/login`,
           { email, password },
           {
             withCredentials: true, // This sends cookies with the request

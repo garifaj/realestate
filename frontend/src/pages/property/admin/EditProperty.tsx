@@ -7,6 +7,7 @@ import { cities, propertyTypes } from "../../../constants/constants";
 import PropertyImageGallery from "./PropertyImageGallery";
 import TextEditor from "../../../components/common/admin/TextEditor";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const EditProperty = () => {
   const { propertyid } = useParams();
@@ -29,7 +30,7 @@ const EditProperty = () => {
 
   const fetchAgents = async () => {
     try {
-      const response = await axios.get("http://localhost:5075/api/agents");
+      const response = await axios.get(`${API_BASE_URL}/agents`);
       setAgents(response.data);
     } catch (error) {
       console.error("Error fetching agents:", error);
@@ -39,7 +40,7 @@ const EditProperty = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5075/api/properties/${propertyid}`
+        `${API_BASE_URL}/properties/${propertyid}`
       );
       const data = await response.data;
       setId(data.id || 0);
@@ -94,7 +95,7 @@ const EditProperty = () => {
     }
 
     axios
-      .put(`http://localhost:5075/api/properties/${propertyid}`, propertyData)
+      .put(`${API_BASE_URL}/properties/${propertyid}`, propertyData)
       .then(() => {
         toast.success("Property updated successfully!", {
           onClose: () => navigate("/admin/properties"),
@@ -130,7 +131,7 @@ const EditProperty = () => {
       });
 
       axios
-        .post("http://localhost:5075/api/properties/savefile", formData)
+        .post(`${API_BASE_URL}/properties/savefile`, formData)
         .then((response) => {
           setImages(response.data);
         })

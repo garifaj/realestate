@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styles from "./EditUser.module.css";
 import axios from "axios";
 import { Slide, toast, ToastContainer } from "react-toastify";
+import API_BASE_URL from "../../../components/common/utils/config";
 
 const EditUser = () => {
   const { userid } = useParams<{ userid: string }>();
@@ -16,7 +17,7 @@ const EditUser = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://localhost:5075/api/users/${userid}` );
+      const response = await axios.get(`${API_BASE_URL}/users/${userid}`);
       const data = await response.data;
       setId(data.id || 0); // Fallback to 0 if undefined
       setName(data.name || ""); // Fallback to empty string
@@ -31,13 +32,14 @@ const EditUser = () => {
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const userData = { id, name,surname, phoneNumber, email, isAdmin };
+    const userData = { id, name, surname, phoneNumber, email, isAdmin };
 
-    axios.put(`http://localhost:5075/api/users/${userid}`, userData)
+    axios
+      .put(`${API_BASE_URL}/users/${userid}`, userData)
       .then(() => {
         toast.success("User updated successfully!", {
           onClose: () => navigate("/admin/users"),
@@ -51,13 +53,13 @@ const EditUser = () => {
 
   return (
     <>
-    <ToastContainer
-      position="top-center"
-      autoClose={800}
-      hideProgressBar={false}
-      pauseOnHover={false}
-      theme="light"
-      transition={Slide}
+      <ToastContainer
+        position="top-center"
+        autoClose={800}
+        hideProgressBar={false}
+        pauseOnHover={false}
+        theme="light"
+        transition={Slide}
       />
       <div className={styles.container_room}>
         <div className="row">
@@ -146,7 +148,9 @@ const EditUser = () => {
                           checked={isAdmin}
                           onChange={(e) => setIsAdmin(e.target.checked)}
                         ></input>
-                        <label className="form-check-label fw-semibold">Admin</label>
+                        <label className="form-check-label fw-semibold">
+                          Admin
+                        </label>
                       </div>
                     </div>
                     <div className="col-lg-12">
