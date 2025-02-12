@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import HideShowPasswordBtn from "./HideShowPasswordBtn";
 import API_BASE_URL from "../utils/config";
+import { Slide, toast, ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const [name, setName] = useState<string>("");
@@ -32,15 +33,19 @@ const Signup = () => {
       setShowValidation(true);
     } else {
       try {
-        await axios.post(`${API_BASE_URL}/register`, {
-          name,
-          surname,
-          phoneNumber,
-          email,
-          password,
-        });
-        alert("Registration successful. Now you can login");
-        navigate("/");
+        await axios
+          .post(`${API_BASE_URL}/register`, {
+            name,
+            surname,
+            phoneNumber,
+            email,
+            password,
+          })
+          .then(() => {
+            toast.success("Registration successful!", {
+              onClose: () => navigate("/login"),
+            });
+          });
 
         //Clear fields after submit
         setName("");
@@ -49,7 +54,7 @@ const Signup = () => {
         setEmail("");
         setPassword("");
       } catch (e) {
-        alert("Registration failed. Please try again later");
+        toast.error("Failed to register. Please try again.");
       }
     }
   }
@@ -57,6 +62,14 @@ const Signup = () => {
   return (
     <>
       <div className="container">
+        <ToastContainer
+          position="top-center"
+          autoClose={700}
+          hideProgressBar={false}
+          pauseOnHover={false}
+          theme="light"
+          transition={Slide}
+        />
         <div className="d-flex mx-auto justify-content-center align-items-center vh-100">
           <div
             className="card p-4 mx-auto border-0 rounded-4 shadow"

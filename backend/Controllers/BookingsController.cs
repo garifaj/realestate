@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using backend.Data;
 using backend.Models;
 using backend.DTOs;
+using backend.Helpers;
 
 namespace backend.Controllers
 {
@@ -16,10 +17,12 @@ namespace backend.Controllers
     public class BookingsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly EmailService _emailService;
 
-        public BookingsController(ApplicationDbContext context)
+        public BookingsController(ApplicationDbContext context, EmailService emailService)
         {
             _context = context;
+            _emailService = emailService;
         }
 
         // GET: api/Bookings
@@ -165,7 +168,9 @@ namespace backend.Controllers
             }
 
             // Validate that the Property and User exist
-            var property = await _context.Property.FindAsync(bookingDto.PropertyId);
+            var property = await _context.Property
+            .Include(p => p.Agent)  // Ensure Agent is included
+            .FirstOrDefaultAsync(p => p.Id == bookingDto.PropertyId);
             var user = await _context.Users.FindAsync(bookingDto.UserId);
 
             if (property == null || user == null)
@@ -211,7 +216,24 @@ namespace backend.Controllers
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync();
-            return Ok();
+
+
+
+            try
+            {
+                _emailService.SendBookingConfirmationEmail(user.Email, booking, property);
+            }
+            catch (Exception ex)
+            {
+                // Log the error but don't fail the request
+                Console.WriteLine($"Failed to send confirmation email: {ex.Message}");
+            }
+
+            return Ok(new
+            {
+                message = "Booking created successfully",
+                bookingId = booking.Id
+            });
         }
 
 

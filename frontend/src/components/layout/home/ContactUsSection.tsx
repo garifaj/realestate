@@ -113,9 +113,13 @@ const ContactUsSection = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={5}
+                    maxLength={300}
                     placeholder="Write your notes or questions here..."
                     required
                   ></textarea>
+                  <small className="text-end d-block mt-1 text-body-tertiary">
+                    {message.length}/300 characters
+                  </small>
                 </div>
                 <div className="d-flex justify-content-center py-2">
                   <button

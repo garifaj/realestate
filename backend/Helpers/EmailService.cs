@@ -1,6 +1,7 @@
 ﻿using MimeKit;
 using MailKit.Net.Smtp;
 using MailKit.Security;
+using backend.Models;
 
 namespace backend.Helpers
 {
@@ -51,6 +52,56 @@ namespace backend.Helpers
                 _config["EmailSettings:SmtpServer"],
                 smtpPort,
                 secureSocketOptions // Critical fix here!
+            );
+
+            client.Authenticate(
+                _config["EmailSettings:SenderEmail"],
+                _config["EmailSettings:AppPassword"]
+            );
+
+            client.Send(message);
+            client.Disconnect(true);
+        }
+
+        public void SendBookingConfirmationEmail(string email, Booking booking, Property property)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(
+                _config["EmailSettings:SenderName"],
+                _config["EmailSettings:SenderEmail"]
+            ));
+            message.To.Add(MailboxAddress.Parse(email));
+            message.Subject = "Booking Confirmation";
+
+            var bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = $@"
+                <p>Hi {booking?.User?.Name ?? "Guest"},</p>
+                <p>Exciting news! Your property tour is officially scheduled. Here are the details:</p>
+                <ul>
+                    <li>🏡 <strong>Property:</strong> {property?.Title ?? "N/A"}</li>
+                    <li>📍 <strong>Address:</strong> {property?.Address ?? "Address not provided"}</li>
+                    <li>🤝 <strong>Agent:</strong> {property?.Agent?.Name ?? "N/A"} {property?.Agent?.Surname ?? ""}, {property?.Agent?.PhoneNumber ?? "Phone not provided"}</li>
+                    <li>📅 <strong>Booking Date:</strong> {booking?.BookingDate.ToString("f") ?? "Date not set"}</li>
+                </ul>
+                <p>You can view or manage your booking anytime in your account dashboard.</p>
+                <p>If you have any questions, feel free to reach out. Looking forward to seeing you!</p>
+                <p>Best regards,<br/>Stated Real Estate Agency</p>"
+            };
+
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using var client = new SmtpClient();
+            var smtpPort = int.Parse(_config["EmailSettings:SmtpPort"]);
+            var secureSocketOptions = smtpPort == 465
+                ? SecureSocketOptions.SslOnConnect
+                : SecureSocketOptions.StartTls;
+
+            client.Connect(
+                _config["EmailSettings:SmtpServer"],
+                smtpPort,
+                secureSocketOptions
             );
 
             client.Authenticate(
